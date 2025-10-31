@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/job.dart';
+import 'job_detail_screen.dart';
 
 class JobSearchScreen extends StatefulWidget {
   final String? searchTerm;
@@ -112,7 +113,12 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
           ],
         ),
         onTap: () {
-          // Navegar a detalles del trabajo
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JobDetailScreen(job: job),
+            ),
+          );
         },
       ),
     );

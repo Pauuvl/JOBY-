@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'job_search_screen.dart';
 import 'profile_screen.dart';
+import 'job_detail_screen.dart';
+import '../models/job.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,7 +53,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Joby'), // 👈 CAMBIO AQUÍ (era 'JobFinder')
+        title: const Text('Joby'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -71,7 +73,7 @@ class HomeTab extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            _buildFeaturedJobs(),
+            _buildFeaturedJobs(context),
           ],
         ),
       ),
@@ -119,34 +121,71 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildFeaturedJobs() {
+  Widget _buildFeaturedJobs(BuildContext context) {
+    final featuredJobs = [
+      Job(
+        id: 1,
+        title: 'Desarrollador Flutter Senior',
+        company: 'TechCorp',
+        location: 'Remoto',
+        salary: '\$80,000 - \$100,000',
+        description: 'Buscamos un desarrollador Flutter experimentado para liderar el desarrollo de aplicaciones móviles innovadoras. Trabajarás con un equipo dinámico en proyectos de alto impacto.',
+        requirements: '• 5+ años de experiencia en Flutter/Dart\n• Conocimiento de arquitectura limpia\n• Experiencia con Firebase y APIs REST\n• Trabajo en equipo y comunicación efectiva',
+        type: 'Remoto',
+        postedDate: DateTime.now().subtract(const Duration(days: 2)),
+      ),
+      Job(
+        id: 2,
+        title: 'Diseñador UX/UI',
+        company: 'StartupXYZ',
+        location: 'Madrid, España',
+        salary: '\$45,000 - \$60,000',
+        description: 'Únete a nuestro equipo de diseño para crear experiencias de usuario excepcionales. Participarás en todo el proceso de diseño desde la investigación hasta la implementación.',
+        requirements: '• Portfolio sólido de proyectos UX/UI\n• Dominio de Figma, Adobe XD y Sketch\n• Conocimiento de principios de diseño\n• Experiencia en diseño móvil',
+        type: 'Híbrido',
+        postedDate: DateTime.now().subtract(const Duration(days: 1)),
+      ),
+      Job(
+        id: 3,
+        title: 'Project Manager',
+        company: 'BigCompany',
+        location: 'Barcelona, España',
+        salary: '\$55,000 - \$70,000',
+        description: 'Gestiona proyectos tecnológicos de principio a fin, coordinando equipos multidisciplinarios y asegurando la entrega exitosa de soluciones innovadoras.',
+        requirements: '• 3+ años gestionando proyectos de TI\n• Certificación PMP o similar\n• Metodologías ágiles (Scrum, Kanban)\n• Excelentes habilidades de liderazgo',
+        type: 'Presencial',
+        postedDate: DateTime.now().subtract(const Duration(days: 3)),
+      ),
+    ];
+
     return Column(
-      children: [
-        _buildJobCard('Desarrollador Flutter Senior', 'TechCorp', 'Remoto', '\$80,000 - \$100,000'),
-        _buildJobCard('Diseñador UX/UI', 'StartupXYZ', 'Madrid, España', '\$45,000 - \$60,000'),
-        _buildJobCard('Project Manager', 'BigCompany', 'Barcelona, España', '\$55,000 - \$70,000'),
-      ],
+      children: featuredJobs.map((job) => _buildJobCard(context, job)).toList(),
     );
   }
 
-  Widget _buildJobCard(String title, String company, String location, String salary) {
+  Widget _buildJobCard(BuildContext context, Job job) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: const CircleAvatar(
           child: Icon(Icons.business),
         ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(job.title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(company),
-            Text(location, style: const TextStyle(color: Colors.grey)),
+            Text(job.company),
+            Text(job.location, style: const TextStyle(color: Colors.grey)),
           ],
         ),
-        trailing: Text(salary, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+        trailing: Text(job.salary, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
         onTap: () {
-          // Navegar a detalles del trabajo
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JobDetailScreen(job: job),
+            ),
+          );
         },
       ),
     );

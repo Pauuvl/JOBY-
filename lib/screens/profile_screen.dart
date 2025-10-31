@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user.dart';
+import 'streak_screen.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -26,8 +28,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {
-              
+            onPressed: () async {
+              final updated = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfileScreen(user: _user),
+                ),
+              );
+              if (updated != null) {
+                setState(() => _user = updated);
+              }
             },
           ),
           IconButton(
@@ -60,7 +70,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ]),
             const SizedBox(height: 16),
             _buildSkillsCard(),
+            const SizedBox(height: 16),
+            _buildStreakButton(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStreakButton() {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const StreakScreen(),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.local_fire_department, color: Colors.orange, size: 32),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Ver mis Rachas',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Puntos, insignias y actividades',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
         ),
       ),
     );
