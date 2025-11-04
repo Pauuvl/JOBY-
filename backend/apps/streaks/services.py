@@ -8,7 +8,12 @@ class StreakService:
     @staticmethod
     def record_activity(user, activity_type='login'):
         """Record user activity and update streak"""
+        from apps.notifications.tasks import send_streak_milestone_notification
+        
         streak, created = Streak.objects.get_or_create(user=user)
+        
+        # Get current streak before update
+        old_streak = streak.current_streak
         
         # Update streak
         streak_updated = streak.check_and_update_streak()
@@ -26,6 +31,13 @@ class StreakService:
             streak.total_jobs_viewed += 1
         
         streak.save()
+        
+        # Check if user reached a milestone (7, 14, 30, 60, 90, 100 days)
+        if streak_updated and streak.current_streak > old_streak:
+            milestones = [7, 14, 30, 60, 90, 100]
+            if streak.current_streak in milestones:
+                # Send milestone notification asynchronously
+                send_streak_milestone_notification.delay(str(user.id), streak.current_streak)
         
         return streak_updated
     
@@ -87,6 +99,8 @@ class StreakService:
                 earned = user.points >= achievement.requirement_value
             
             if earned:
+                from apps.notifications.tasks import send_achievement_notification
+                
                 # Award achievement
                 UserAchievement.objects.create(
                     user=user,
@@ -101,6 +115,9 @@ class StreakService:
                         achievement.points_reward,
                         f"Achievement unlocked: {achievement.name}"
                     )
+                
+                # Send achievement notification asynchronously
+                send_achievement_notification.delay(str(user.id), str(achievement.id))
                 
                 new_achievements.append(achievement)
         

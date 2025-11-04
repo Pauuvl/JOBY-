@@ -22,4 +22,8 @@ urlpatterns = [
     
     # FCM Token for push notifications
     path('register-fcm-token/', views.register_fcm_token, name='register_fcm_token'),
+    
+    # Motivational Messages
+    path('motivational-message/', views.get_motivational_message, name='motivational_message'),
+    path('daily-message/', views.get_daily_message, name='daily_message'),
 ]

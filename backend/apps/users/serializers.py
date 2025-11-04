@@ -3,7 +3,7 @@ Serializers for User Model
 """
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import User
+from .models import User, MotivationalMessage
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -86,3 +86,12 @@ class ChangePasswordSerializer(serializers.Serializer):
 class FCMTokenSerializer(serializers.Serializer):
     """Serializer for FCM token registration"""
     fcm_token = serializers.CharField(required=True, max_length=255)
+
+
+class MotivationalMessageSerializer(serializers.ModelSerializer):
+    """Serializer for motivational messages"""
+    
+    class Meta:
+        model = MotivationalMessage
+        fields = ['id', 'message', 'author', 'category', 'created_at']
+        read_only_fields = ['id', 'created_at']

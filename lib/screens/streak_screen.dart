@@ -11,18 +11,28 @@ class StreakScreen extends StatefulWidget {
   State<StreakScreen> createState() => _StreakScreenState();
 }
 
-class _StreakScreenState extends State<StreakScreen> {
+class _StreakScreenState extends State<StreakScreen> with SingleTickerProviderStateMixin {
   final _streakService = StreakService();
   Streak? _streak;
   List<Achievement> _achievements = [];
   List<PointsHistory> _pointsHistory = [];
+  List<Challenge> _availableChallenges = [];
+  List<UserChallenge> _activeChallenges = [];
   bool _isLoading = true;
   String? _error;
+  TabController? _challengeTabController;
 
   @override
   void initState() {
     super.initState();
+    _challengeTabController = TabController(length: 3, vsync: this);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _challengeTabController?.dispose();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -35,11 +45,15 @@ class _StreakScreenState extends State<StreakScreen> {
       final streak = await _streakService.getMyStreak();
       final achievements = await _streakService.getMyAchievements();
       final pointsHistory = await _streakService.getPointsHistory();
+      final availableChallenges = await _streakService.getAvailableChallenges();
+      final activeChallenges = await _streakService.getActiveChallenges();
 
       setState(() {
         _streak = streak;
         _achievements = achievements;
         _pointsHistory = pointsHistory;
+        _availableChallenges = availableChallenges;
+        _activeChallenges = activeChallenges;
         _isLoading = false;
       });
     } catch (e, stackTrace) {
@@ -72,6 +86,32 @@ class _StreakScreenState extends State<StreakScreen> {
       }
 
       await _loadData(); // Recargar todo
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _startChallenge(String challengeId, String title) async {
+    try {
+      final result = await _streakService.startChallenge(challengeId);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result['message'] ?? '¡Reto iniciado!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+
+      await _loadData(); // Recargar datos
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -217,6 +257,45 @@ class _StreakScreenState extends State<StreakScreen> {
                   ),
                 ),
               ],
+            ),
+
+            const SizedBox(height: 24),
+
+            // Sección de Retos
+            const Text(
+              '🎯 Retos',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            
+            // Pestañas de retos
+            TabBar(
+              controller: _challengeTabController,
+              labelColor: Colors.deepPurple,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.deepPurple,
+              tabs: const [
+                Tab(text: 'Disponibles'),
+                Tab(text: 'Activos'),
+                Tab(text: 'Completados'),
+              ],
+            ),
+            const SizedBox(height: 12),
+            
+            // Contenido de pestañas
+            SizedBox(
+              height: 300,
+              child: TabBarView(
+                controller: _challengeTabController,
+                children: [
+                  // Retos disponibles
+                  _buildAvailableChallenges(),
+                  // Retos activos
+                  _buildActiveChallenges(),
+                  // Retos completados
+                  _buildCompletedChallenges(),
+                ],
+              ),
             ),
 
             const SizedBox(height: 24),
@@ -422,9 +501,297 @@ class _StreakScreenState extends State<StreakScreen> {
     );
   }
 
-  String _formatDate(DateTime date) {
+  Widget _buildAvailableChallenges() {
+    if (_availableChallenges.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.check_circle, size: 48, color: Colors.green),
+            SizedBox(height: 8),
+            Text('No hay retos disponibles', style: TextStyle(color: Colors.grey)),
+            Text('¡Has completado todos los retos!', style: TextStyle(color: Colors.grey, fontSize: 12)),
+          ],
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: _availableChallenges.length,
+      itemBuilder: (context, index) {
+        final challenge = _availableChallenges[index];
+        return _buildChallengeCard(challenge);
+      },
+    );
+  }
+
+  Widget _buildActiveChallenges() {
+    if (_activeChallenges.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.hourglass_empty, size: 48, color: Colors.grey),
+            SizedBox(height: 8),
+            Text('No tienes retos activos', style: TextStyle(color: Colors.grey)),
+            Text('¡Inicia un reto desde la pestaña "Disponibles"!', style: TextStyle(color: Colors.grey, fontSize: 12)),
+          ],
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: _activeChallenges.length,
+      itemBuilder: (context, index) {
+        final userChallenge = _activeChallenges[index];
+        return _buildUserChallengeCard(userChallenge);
+      },
+    );
+  }
+
+  Widget _buildCompletedChallenges() {
+    return FutureBuilder<List<UserChallenge>>(
+      future: _streakService.getCompletedChallenges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        final completedChallenges = snapshot.data ?? [];
+
+        if (completedChallenges.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.task_alt, size: 48, color: Colors.grey),
+                SizedBox(height: 8),
+                Text('Aún no has completado retos', style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: completedChallenges.length,
+          itemBuilder: (context, index) {
+            final userChallenge = completedChallenges[index];
+            return _buildUserChallengeCard(userChallenge);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildChallengeCard(Challenge challenge) {
+    Color typeColor = Colors.grey;
+    if (challenge.challengeType == 'daily') typeColor = Colors.blue;
+    if (challenge.challengeType == 'weekly') typeColor = Colors.purple;
+    if (challenge.challengeType == 'special') typeColor = Colors.orange;
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(challenge.icon, style: const TextStyle(fontSize: 32)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        challenge.title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: typeColor.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          challenge.typeDisplay,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: typeColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    const Icon(Icons.stars, color: Colors.amber, size: 20),
+                    Text(
+                      '+${challenge.pointsReward}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              challenge.description,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => _startChallenge(challenge.id, challenge.title),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: typeColor,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Iniciar Reto'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserChallengeCard(UserChallenge userChallenge) {
+    final challenge = userChallenge.challengeDetails;
+    if (challenge == null) return const SizedBox();
+
+    Color statusColor = Colors.blue;
+    if (userChallenge.status == 'completed') statusColor = Colors.green;
+    if (userChallenge.status == 'failed' || userChallenge.status == 'expired') statusColor = Colors.red;
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(challenge.icon, style: const TextStyle(fontSize: 32)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        challenge.title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        userChallenge.statusDisplay,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (userChallenge.isCompleted && userChallenge.pointsEarned != null)
+                  Column(
+                    children: [
+                      const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                      Text(
+                        '+${userChallenge.pointsEarned}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              challenge.description,
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
+            ),
+            const SizedBox(height: 12),
+            // Barra de progreso
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${userChallenge.currentProgress} / ${userChallenge.targetCount}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      '${userChallenge.progressPercentage.toInt()}%',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: userChallenge.progressPercentage / 100,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(statusColor),
+                  minHeight: 8,
+                ),
+              ],
+            ),
+            if (userChallenge.expiresAt != null && userChallenge.status == 'active')
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    const Icon(Icons.access_time, size: 14, color: Colors.orange),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Expira: ${_formatDateTime(userChallenge.expiresAt!)}',
+                      style: const TextStyle(fontSize: 12, color: Colors.orange),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatDateTime(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
+
+    if (difference.isNegative) {
+      final futureTime = date.difference(now);
+      if (futureTime.inHours < 24) {
+        return 'en ${futureTime.inHours} horas';
+      } else {
+        return 'en ${futureTime.inDays} días';
+      }
+    }
 
     if (difference.inMinutes < 60) {
       return 'Hace ${difference.inMinutes} minutos';

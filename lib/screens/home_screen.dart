@@ -53,8 +53,63 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  String? _motivationalMessage;
+  String? _messageAuthor;
+  bool _isLoadingMessage = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDailyMessage();
+  }
+
+  Future<void> _loadDailyMessage() async {
+    try {
+      // TODO: Implementar llamada real a la API cuando esté configurada
+      // Por ahora, mensaje por defecto
+      await Future.delayed(const Duration(milliseconds: 500)); // Simular carga
+      
+      setState(() {
+        _motivationalMessage = '¡Cada día es una nueva oportunidad para acercarte a tus metas! 🌟';
+        _messageAuthor = 'Joby Team';
+        _isLoadingMessage = false;
+      });
+      
+      /* Código real cuando tengas la API configurada:
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final response = await http.get(
+        Uri.parse('${ApiConfig.baseUrl}/auth/daily-message/'),
+        headers: {
+          'Authorization': 'Bearer ${authProvider.token}',
+        },
+      );
+      
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _motivationalMessage = data['message'];
+          _messageAuthor = data['author'];
+          _isLoadingMessage = false;
+        });
+      }
+      */
+    } catch (e) {
+      print('Error loading motivational message: $e');
+      setState(() {
+        _motivationalMessage = '¡Hoy es un gran día para alcanzar tus objetivos! 💪';
+        _messageAuthor = null;
+        _isLoadingMessage = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +128,11 @@ class HomeTab extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
+            
+            // Mensaje Motivacional
+            _buildMotivationalCard(),
+            
+            const SizedBox(height: 20),
             _buildQuickSearchCard(context),
             const SizedBox(height: 20),
             const Text(
@@ -81,6 +141,95 @@ class HomeTab extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildFeaturedJobs(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMotivationalCard() {
+    if (_isLoadingMessage) {
+      return Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF6C63FF), Color(0xFF5A52D5)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF6C63FF), Color(0xFF5A52D5)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.auto_awesome, color: Colors.white, size: 32),
+                const SizedBox(width: 12),
+                Text(
+                  'Mensaje del día',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.refresh, color: Colors.white),
+                  onPressed: _loadDailyMessage,
+                  tooltip: 'Refrescar mensaje',
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              _motivationalMessage ?? '¡Cada día es una oportunidad! 🌟',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
+                height: 1.5,
+              ),
+            ),
+            if (_messageAuthor != null && _messageAuthor!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  '— $_messageAuthor',
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Streak, Achievement, UserAchievement, PointsHistory, Leaderboard
+from .models import Streak, Achievement, UserAchievement, PointsHistory, Leaderboard, Challenge, UserChallenge
 
 
 class StreakSerializer(serializers.ModelSerializer):
@@ -83,3 +83,71 @@ class UserStatsSerializer(serializers.Serializer):
     activity = serializers.DictField()
     points = serializers.DictField()
     achievements = serializers.DictField()
+
+
+class ChallengeSerializer(serializers.ModelSerializer):
+    """Serializer for Challenge model"""
+    
+    is_available = serializers.SerializerMethodField()
+    user_progress = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Challenge
+        fields = [
+            'id', 'title', 'description', 'icon', 'challenge_type', 'category',
+            'target_action', 'target_count', 'points_reward', 'bonus_multiplier',
+            'is_active', 'start_date', 'end_date', 'priority', 'is_available',
+            'user_progress', 'created_at'
+        ]
+        read_only_fields = ['id', 'created_at']
+    
+    def get_is_available(self, obj):
+        """Check if challenge is currently available"""
+        return obj.is_available()
+    
+    def get_user_progress(self, obj):
+        """Get current user's progress on this challenge if exists"""
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            try:
+                user_challenge = UserChallenge.objects.filter(
+                    user=request.user,
+                    challenge=obj,
+                    status='active'
+                ).order_by('-started_at').first()
+                
+                if user_challenge:
+                    return {
+                        'id': str(user_challenge.id),
+                        'current_progress': user_challenge.current_progress,
+                        'progress_percentage': user_challenge.progress_percentage,
+                        'status': user_challenge.status,
+                        'started_at': user_challenge.started_at,
+                    }
+            except UserChallenge.DoesNotExist:
+                pass
+        return None
+
+
+class UserChallengeSerializer(serializers.ModelSerializer):
+    """Serializer for UserChallenge model"""
+    
+    challenge_details = ChallengeSerializer(source='challenge', read_only=True)
+    progress_percentage = serializers.ReadOnlyField()
+    is_completed = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = UserChallenge
+        fields = [
+            'id', 'user', 'challenge', 'challenge_details', 
+            'current_progress', 'status', 'progress_percentage', 'is_completed',
+            'started_at', 'completed_at', 'expires_at', 'points_earned'
+        ]
+        read_only_fields = ['id', 'user', 'started_at', 'completed_at', 'points_earned']
+
+
+class ChallengeProgressSerializer(serializers.Serializer):
+    """Serializer for updating challenge progress"""
+    
+    challenge_id = serializers.UUIDField(required=True)
+    increment = serializers.IntegerField(default=1, min_value=1)

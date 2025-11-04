@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.db import transaction
 
-from .models import User
+from .models import User, MotivationalMessage
 from .serializers import (
     UserSerializer,
     UserRegistrationSerializer,
@@ -17,6 +17,7 @@ from .serializers import (
     UserProfileUpdateSerializer,
     ChangePasswordSerializer,
     FCMTokenSerializer,
+    MotivationalMessageSerializer,
 )
 
 
@@ -218,3 +219,92 @@ def register_fcm_token(request):
         }, status=status.HTTP_200_OK)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_motivational_message(request):
+    """
+    Get a random motivational message for the home screen
+    GET /api/motivational-message/
+    
+    Query params:
+    - category: Filter by category (optional)
+    """
+    import random
+    
+    category = request.query_params.get('category', None)
+    
+    # Get active messages
+    messages = MotivationalMessage.objects.filter(is_active=True)
+    
+    if category:
+        messages = messages.filter(category=category)
+    
+    if not messages.exists():
+        return Response({
+            'message': '¡Cada día es una nueva oportunidad para crecer! 🌟',
+            'author': 'Joby Team',
+            'category': 'motivation'
+        }, status=status.HTTP_200_OK)
+    
+    # Weight by priority (higher priority = more likely to be selected)
+    messages_list = list(messages)
+    weights = [msg.priority + 1 for msg in messages_list]  # +1 to avoid zero weight
+    
+    selected_message = random.choices(messages_list, weights=weights, k=1)[0]
+    
+    # Increment shown count
+    selected_message.increment_shown_count()
+    
+    serializer = MotivationalMessageSerializer(selected_message)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_daily_message(request):
+    """
+    Get daily motivational message (same message for the entire day)
+    GET /api/daily-message/
+    
+    Returns the same message for all users throughout the day
+    """
+    from django.utils import timezone
+    from django.core.cache import cache
+    import random
+    
+    # Create a cache key based on today's date
+    today = timezone.now().date()
+    cache_key = f'daily_message_{today}'
+    
+    # Try to get from cache
+    cached_message = cache.get(cache_key)
+    
+    if cached_message:
+        return Response(cached_message, status=status.HTTP_200_OK)
+    
+    # Get active messages
+    messages = MotivationalMessage.objects.filter(is_active=True)
+    
+    if not messages.exists():
+        message_data = {
+            'message': '¡Cada día es una nueva oportunidad para crecer! 🌟',
+            'author': 'Joby Team',
+            'category': 'motivation'
+        }
+    else:
+        # Select message based on day of year (deterministic for the day)
+        day_of_year = today.timetuple().tm_yday
+        messages_list = list(messages)
+        selected_message = messages_list[day_of_year % len(messages_list)]
+        
+        # Increment shown count
+        selected_message.increment_shown_count()
+        
+        message_data = MotivationalMessageSerializer(selected_message).data
+    
+    # Cache for 24 hours (86400 seconds)
+    cache.set(cache_key, message_data, 86400)
+    
+    return Response(message_data, status=status.HTTP_200_OK)

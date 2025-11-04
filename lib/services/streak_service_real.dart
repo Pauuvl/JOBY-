@@ -134,4 +134,68 @@ class StreakService {
     final response = await _api.get('${ApiConfig.streaks}/stats/me/');
     return jsonDecode(response.body);
   }
+
+  // ============= CHALLENGES / RETOS =============
+
+  // Obtener retos disponibles
+  Future<List<Challenge>> getAvailableChallenges() async {
+    final response = await _api.get('${ApiConfig.streaks}/challenges/available/');
+    final List<dynamic> data = jsonDecode(response.body);
+    return data.map((json) => Challenge.fromJson(json)).toList();
+  }
+
+  // Obtener retos diarios
+  Future<Map<String, dynamic>> getDailyChallenges() async {
+    final response = await _api.get('${ApiConfig.streaks}/challenges/daily/');
+    return jsonDecode(response.body);
+  }
+
+  // Obtener retos semanales
+  Future<Map<String, dynamic>> getWeeklyChallenges() async {
+    final response = await _api.get('${ApiConfig.streaks}/challenges/weekly/');
+    return jsonDecode(response.body);
+  }
+
+  // Iniciar un reto
+  Future<Map<String, dynamic>> startChallenge(String challengeId) async {
+    final response = await _api.post(
+      '${ApiConfig.streaks}/challenges/$challengeId/start/',
+    );
+    return jsonDecode(response.body);
+  }
+
+  // Obtener mis retos activos
+  Future<List<UserChallenge>> getActiveChallenges() async {
+    final response = await _api.get('${ApiConfig.streaks}/user-challenges/active/');
+    final List<dynamic> data = jsonDecode(response.body);
+    return data.map((json) => UserChallenge.fromJson(json)).toList();
+  }
+
+  // Obtener mis retos completados
+  Future<List<UserChallenge>> getCompletedChallenges() async {
+    final response = await _api.get('${ApiConfig.streaks}/user-challenges/completed/');
+    final List<dynamic> data = jsonDecode(response.body);
+    return data.map((json) => UserChallenge.fromJson(json)).toList();
+  }
+
+  // Actualizar progreso de un reto
+  Future<Map<String, dynamic>> updateChallengeProgress({
+    required String challengeId,
+    int increment = 1,
+  }) async {
+    final response = await _api.post(
+      '${ApiConfig.streaks}/user-challenges/update_progress/',
+      body: {
+        'challenge_id': challengeId,
+        'increment': increment,
+      },
+    );
+    return jsonDecode(response.body);
+  }
+
+  // Obtener resumen de retos
+  Future<Map<String, dynamic>> getChallengesSummary() async {
+    final response = await _api.get('${ApiConfig.streaks}/user-challenges/summary/');
+    return jsonDecode(response.body);
+  }
 }

@@ -69,3 +69,44 @@ class User(AbstractUser):
     
     def get_short_name(self):
         return self.name.split()[0] if self.name else self.username
+
+
+class MotivationalMessage(models.Model):
+    """Mensajes motivacionales para mostrar en la app"""
+    
+    CATEGORY_CHOICES = [
+        ('motivation', 'Motivación'),
+        ('job_search', 'Búsqueda de Empleo'),
+        ('career', 'Desarrollo de Carrera'),
+        ('perseverance', 'Perseverancia'),
+        ('success', 'Éxito'),
+        ('growth', 'Crecimiento'),
+        ('positivity', 'Positividad'),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    message = models.TextField(verbose_name='Mensaje')
+    author = models.CharField(max_length=200, blank=True, null=True, verbose_name='Autor')
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='motivation', verbose_name='Categoría')
+    
+    is_active = models.BooleanField(default=True, verbose_name='Activo')
+    priority = models.IntegerField(default=0, verbose_name='Prioridad', help_text='Mayor prioridad = más probabilidad de mostrarse')
+    
+    times_shown = models.IntegerField(default=0, verbose_name='Veces mostrado')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'motivational_messages'
+        verbose_name = 'Mensaje Motivacional'
+        verbose_name_plural = 'Mensajes Motivacionales'
+        ordering = ['-priority', '-created_at']
+    
+    def __str__(self):
+        return f"{self.message[:50]}..." if len(self.message) > 50 else self.message
+    
+    def increment_shown_count(self):
+        """Incrementar el contador de veces mostrado"""
+        self.times_shown += 1
+        self.save(update_fields=['times_shown'])

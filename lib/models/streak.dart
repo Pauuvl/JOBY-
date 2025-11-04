@@ -204,3 +204,142 @@ class LeaderboardEntry {
     };
   }
 }
+
+class Challenge {
+  final String id;
+  final String title;
+  final String description;
+  final String challengeType;
+  final String category;
+  final int targetCount;
+  final int pointsReward;
+  final String icon;
+  final bool isActive;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final bool isAvailable;
+  final UserChallenge? userProgress;
+
+  Challenge({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.challengeType,
+    required this.category,
+    required this.targetCount,
+    required this.pointsReward,
+    required this.icon,
+    this.isActive = true,
+    this.startDate,
+    this.endDate,
+    this.isAvailable = true,
+    this.userProgress,
+  });
+
+  factory Challenge.fromJson(Map<String, dynamic> json) {
+    return Challenge(
+      id: json['id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      challengeType: json['challenge_type']?.toString() ?? '',
+      category: json['category']?.toString() ?? '',
+      targetCount: json['target_count'] ?? 0,
+      pointsReward: json['points_reward'] ?? 0,
+      icon: json['icon']?.toString() ?? '🎯',
+      isActive: json['is_active'] ?? true,
+      startDate: json['start_date'] != null 
+          ? DateTime.parse(json['start_date']) 
+          : null,
+      endDate: json['end_date'] != null 
+          ? DateTime.parse(json['end_date']) 
+          : null,
+      isAvailable: json['is_available'] ?? true,
+      userProgress: json['user_progress'] != null 
+          ? UserChallenge.fromJson(json['user_progress']) 
+          : null,
+    );
+  }
+
+  String get typeDisplay {
+    switch (challengeType) {
+      case 'daily':
+        return 'Diario';
+      case 'weekly':
+        return 'Semanal';
+      case 'special':
+        return 'Especial';
+      default:
+        return challengeType;
+    }
+  }
+}
+
+class UserChallenge {
+  final String id;
+  final String challengeId;
+  final Challenge? challengeDetails;
+  final int currentProgress;
+  final int targetCount;
+  final String status;
+  final int? pointsEarned;
+  final DateTime startedAt;
+  final DateTime? completedAt;
+  final DateTime? expiresAt;
+  final double progressPercentage;
+  final bool isCompleted;
+
+  UserChallenge({
+    required this.id,
+    required this.challengeId,
+    this.challengeDetails,
+    required this.currentProgress,
+    required this.targetCount,
+    required this.status,
+    this.pointsEarned,
+    required this.startedAt,
+    this.completedAt,
+    this.expiresAt,
+    required this.progressPercentage,
+    required this.isCompleted,
+  });
+
+  factory UserChallenge.fromJson(Map<String, dynamic> json) {
+    return UserChallenge(
+      id: json['id']?.toString() ?? '',
+      challengeId: json['challenge']?.toString() ?? '',
+      challengeDetails: json['challenge_details'] != null 
+          ? Challenge.fromJson(json['challenge_details']) 
+          : null,
+      currentProgress: json['current_progress'] ?? 0,
+      targetCount: json['challenge_details']?['target_count'] ?? json['target_count'] ?? 0,
+      status: json['status']?.toString() ?? 'active',
+      pointsEarned: json['points_earned'],
+      startedAt: json['started_at'] != null 
+          ? DateTime.parse(json['started_at']) 
+          : DateTime.now(),
+      completedAt: json['completed_at'] != null 
+          ? DateTime.parse(json['completed_at']) 
+          : null,
+      expiresAt: json['expires_at'] != null 
+          ? DateTime.parse(json['expires_at']) 
+          : null,
+      progressPercentage: (json['progress_percentage'] ?? 0.0).toDouble(),
+      isCompleted: json['is_completed'] ?? false,
+    );
+  }
+
+  String get statusDisplay {
+    switch (status) {
+      case 'active':
+        return 'En progreso';
+      case 'completed':
+        return 'Completado';
+      case 'failed':
+        return 'Fallido';
+      case 'expired':
+        return 'Expirado';
+      default:
+        return status;
+    }
+  }
+}

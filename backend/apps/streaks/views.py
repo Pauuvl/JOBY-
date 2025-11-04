@@ -2,13 +2,14 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 from django.utils import timezone
 
-from .models import Streak, Achievement, UserAchievement, PointsHistory, Leaderboard
+from .models import Streak, Achievement, UserAchievement, PointsHistory, Leaderboard, Challenge, UserChallenge
 from .serializers import (
     StreakSerializer, AchievementSerializer, UserAchievementSerializer,
-    PointsHistorySerializer, LeaderboardSerializer, UserStatsSerializer
+    PointsHistorySerializer, LeaderboardSerializer, UserStatsSerializer,
+    ChallengeSerializer, UserChallengeSerializer, ChallengeProgressSerializer
 )
 from .services import StreakService
 
@@ -205,3 +206,204 @@ class StatsViewSet(viewsets.ViewSet):
         stats = StreakService.get_user_stats(request.user)
         serializer = UserStatsSerializer(stats)
         return Response(serializer.data)
+
+
+class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for viewing challenges"""
+    
+    serializer_class = ChallengeSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        """Get available challenges"""
+        queryset = Challenge.objects.filter(is_active=True)
+        
+        # Filter by type
+        challenge_type = self.request.query_params.get('type', None)
+        if challenge_type:
+            queryset = queryset.filter(challenge_type=challenge_type)
+        
+        # Filter by category
+        category = self.request.query_params.get('category', None)
+        if category:
+            queryset = queryset.filter(category=category)
+        
+        return queryset
+    
+    @action(detail=False, methods=['get'])
+    def available(self, request):
+        """Get all currently available challenges"""
+        today = timezone.now().date()
+        challenges = Challenge.objects.filter(
+            is_active=True
+        ).filter(
+            Q(start_date__isnull=True) | Q(start_date__lte=today)
+        ).filter(
+            Q(end_date__isnull=True) | Q(end_date__gte=today)
+        )
+        
+        serializer = self.get_serializer(challenges, many=True, context={'request': request})
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def daily(self, request):
+        """Get today's daily challenges"""
+        challenges = Challenge.objects.filter(
+            is_active=True,
+            challenge_type='daily'
+        )
+        
+        serializer = self.get_serializer(challenges, many=True, context={'request': request})
+        return Response({
+            'date': timezone.now().date(),
+            'challenges': serializer.data
+        })
+    
+    @action(detail=False, methods=['get'])
+    def weekly(self, request):
+        """Get this week's challenges"""
+        challenges = Challenge.objects.filter(
+            is_active=True,
+            challenge_type='weekly'
+        )
+        
+        serializer = self.get_serializer(challenges, many=True, context={'request': request})
+        return Response({
+            'week': timezone.now().isocalendar()[1],
+            'challenges': serializer.data
+        })
+    
+    @action(detail=True, methods=['post'])
+    def start(self, request, pk=None):
+        """Start a challenge"""
+        challenge = self.get_object()
+        
+        if not challenge.is_available():
+            return Response({
+                'error': 'Este reto no está disponible actualmente'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Check if user already has an active challenge
+        existing = UserChallenge.objects.filter(
+            user=request.user,
+            challenge=challenge,
+            status='active'
+        ).first()
+        
+        if existing:
+            return Response({
+                'message': 'Ya tienes este reto activo',
+                'user_challenge': UserChallengeSerializer(existing).data
+            })
+        
+        # Create new user challenge
+        expires_at = None
+        if challenge.challenge_type == 'daily':
+            expires_at = timezone.now().replace(hour=23, minute=59, second=59)
+        elif challenge.challenge_type == 'weekly':
+            from datetime import timedelta
+            expires_at = timezone.now() + timedelta(days=7)
+        
+        user_challenge = UserChallenge.objects.create(
+            user=request.user,
+            challenge=challenge,
+            expires_at=expires_at
+        )
+        
+        serializer = UserChallengeSerializer(user_challenge)
+        return Response({
+            'message': 'Reto iniciado exitosamente',
+            'user_challenge': serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+
+class UserChallengeViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for viewing user challenges"""
+    
+    serializer_class = UserChallengeSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return UserChallenge.objects.filter(user=self.request.user)
+    
+    @action(detail=False, methods=['get'])
+    def active(self, request):
+        """Get all active challenges for current user"""
+        active_challenges = UserChallenge.objects.filter(
+            user=request.user,
+            status='active'
+        )
+        
+        serializer = self.get_serializer(active_challenges, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def completed(self, request):
+        """Get all completed challenges for current user"""
+        completed = UserChallenge.objects.filter(
+            user=request.user,
+            status='completed'
+        )
+        
+        serializer = self.get_serializer(completed, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'])
+    def update_progress(self, request):
+        """Update progress on a challenge"""
+        serializer = ChallengeProgressSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        challenge_id = serializer.validated_data['challenge_id']
+        increment = serializer.validated_data['increment']
+        
+        try:
+            user_challenge = UserChallenge.objects.get(
+                user=request.user,
+                challenge_id=challenge_id,
+                status='active'
+            )
+        except UserChallenge.DoesNotExist:
+            return Response({
+                'error': 'No tienes este reto activo'
+            }, status=status.HTTP_404_NOT_FOUND)
+        
+        # Update progress
+        points_earned = user_challenge.update_progress(increment)
+        
+        response_serializer = UserChallengeSerializer(user_challenge)
+        response_data = {
+            'message': 'Progreso actualizado',
+            'user_challenge': response_serializer.data
+        }
+        
+        if user_challenge.status == 'completed':
+            response_data['message'] = f'¡Reto completado! +{points_earned} puntos'
+            response_data['points_earned'] = points_earned
+        
+        return Response(response_data)
+    
+    @action(detail=False, methods=['get'])
+    def summary(self, request):
+        """Get challenges summary for current user"""
+        total_completed = UserChallenge.objects.filter(
+            user=request.user,
+            status='completed'
+        ).count()
+        
+        total_active = UserChallenge.objects.filter(
+            user=request.user,
+            status='active'
+        ).count()
+        
+        total_points_from_challenges = UserChallenge.objects.filter(
+            user=request.user,
+            status='completed'
+        ).aggregate(total=Sum('points_earned'))['total'] or 0
+        
+        return Response({
+            'total_completed': total_completed,
+            'total_active': total_active,
+            'total_points_earned': total_points_from_challenges
+        })
