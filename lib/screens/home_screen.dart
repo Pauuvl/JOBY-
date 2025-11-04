@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'job_search_screen.dart';
 import 'profile_screen.dart';
 import 'job_detail_screen.dart';
+import 'streak_screen.dart';
 import '../models/job.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const HomeTab(),
     const JobSearchScreen(),
+    const StreakScreen(),
     const ProfileScreen(),
   ];
 
@@ -27,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -35,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Buscar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.whatshot),
+            label: 'Rachas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -124,37 +131,64 @@ class HomeTab extends StatelessWidget {
   Widget _buildFeaturedJobs(BuildContext context) {
     final featuredJobs = [
       Job(
-        id: 1,
+        id: '1',
         title: 'Desarrollador Flutter Senior',
-        company: 'TechCorp',
+        companyName: 'TechCorp',
         location: 'Remoto',
-        salary: '\$80,000 - \$100,000',
+        salaryMin: 80000,
+        salaryMax: 100000,
         description: 'Buscamos un desarrollador Flutter experimentado para liderar el desarrollo de aplicaciones móviles innovadoras. Trabajarás con un equipo dinámico en proyectos de alto impacto.',
-        requirements: '• 5+ años de experiencia en Flutter/Dart\n• Conocimiento de arquitectura limpia\n• Experiencia con Firebase y APIs REST\n• Trabajo en equipo y comunicación efectiva',
-        type: 'Remoto',
-        postedDate: DateTime.now().subtract(const Duration(days: 2)),
+        requirements: [
+          '5+ años de experiencia en Flutter/Dart',
+          'Conocimiento de arquitectura limpia',
+          'Experiencia con Firebase y APIs REST',
+          'Trabajo en equipo y comunicación efectiva'
+        ],
+        jobType: 'full_time',
+        experienceLevel: 'senior',
+        skillsRequired: ['Flutter', 'Dart', 'Firebase'],
+        remoteOk: true,
+        postedAt: DateTime.now().subtract(const Duration(days: 2)),
       ),
       Job(
-        id: 2,
+        id: '2',
         title: 'Diseñador UX/UI',
-        company: 'StartupXYZ',
+        companyName: 'StartupXYZ',
         location: 'Madrid, España',
-        salary: '\$45,000 - \$60,000',
+        salaryMin: 45000,
+        salaryMax: 60000,
         description: 'Únete a nuestro equipo de diseño para crear experiencias de usuario excepcionales. Participarás en todo el proceso de diseño desde la investigación hasta la implementación.',
-        requirements: '• Portfolio sólido de proyectos UX/UI\n• Dominio de Figma, Adobe XD y Sketch\n• Conocimiento de principios de diseño\n• Experiencia en diseño móvil',
-        type: 'Híbrido',
-        postedDate: DateTime.now().subtract(const Duration(days: 1)),
+        requirements: [
+          'Portfolio sólido de proyectos UX/UI',
+          'Dominio de Figma, Adobe XD y Sketch',
+          'Conocimiento de principios de diseño',
+          'Experiencia en diseño móvil'
+        ],
+        jobType: 'full_time',
+        experienceLevel: 'mid_level',
+        skillsRequired: ['Figma', 'Adobe XD', 'UX Design'],
+        remoteOk: false,
+        postedAt: DateTime.now().subtract(const Duration(days: 1)),
       ),
       Job(
-        id: 3,
+        id: '3',
         title: 'Project Manager',
-        company: 'BigCompany',
+        companyName: 'BigCompany',
         location: 'Barcelona, España',
-        salary: '\$55,000 - \$70,000',
+        salaryMin: 55000,
+        salaryMax: 70000,
         description: 'Gestiona proyectos tecnológicos de principio a fin, coordinando equipos multidisciplinarios y asegurando la entrega exitosa de soluciones innovadoras.',
-        requirements: '• 3+ años gestionando proyectos de TI\n• Certificación PMP o similar\n• Metodologías ágiles (Scrum, Kanban)\n• Excelentes habilidades de liderazgo',
-        type: 'Presencial',
-        postedDate: DateTime.now().subtract(const Duration(days: 3)),
+        requirements: [
+          '3+ años gestionando proyectos de TI',
+          'Certificación PMP o similar',
+          'Metodologías ágiles (Scrum, Kanban)',
+          'Excelentes habilidades de liderazgo'
+        ],
+        jobType: 'full_time',
+        experienceLevel: 'mid_level',
+        skillsRequired: ['Project Management', 'Scrum', 'Agile'],
+        remoteOk: false,
+        postedAt: DateTime.now().subtract(const Duration(days: 3)),
       ),
     ];
 
@@ -164,6 +198,10 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget _buildJobCard(BuildContext context, Job job) {
+    final salary = job.salaryMin != null && job.salaryMax != null
+        ? '\$${job.salaryMin!.toInt()}k - \$${job.salaryMax!.toInt()}k'
+        : 'Salario competitivo';
+    
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
@@ -174,11 +212,11 @@ class HomeTab extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(job.company),
+            Text(job.companyName),
             Text(job.location, style: const TextStyle(color: Colors.grey)),
           ],
         ),
-        trailing: Text(job.salary, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+        trailing: Text(salary, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
         onTap: () {
           Navigator.push(
             context,

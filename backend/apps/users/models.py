@@ -17,6 +17,7 @@ class User(AbstractUser):
     resume = models.FileField(upload_to='resumes/', blank=True, null=True, verbose_name='Resume/CV')
     
     # Professional Info
+    age = models.IntegerField(blank=True, null=True, verbose_name='Age')
     experience = models.TextField(blank=True, null=True, verbose_name='Work Experience')
     education = models.TextField(blank=True, null=True, verbose_name='Education')
     location = models.CharField(max_length=255, blank=True, null=True, verbose_name='Location')

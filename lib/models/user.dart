@@ -1,116 +1,114 @@
 class User {
-  final int id;
-  final String name;
+  final String id;
   final String email;
+  final String name;
+  final int? age;
   final String? phone;
-  final String? profileImageUrl;
+  final String? profileImage;
   final String? resume;
-  final List<String> skills;
   final String? experience;
   final String? education;
   final String? location;
-  final DateTime createdAt;
-  final bool isActive;
+  final List<String> skills;
+  final int points;
+  final int profileCompletionPercentage;
+  final DateTime? dateJoined;
 
   User({
     required this.id,
-    required this.name,
     required this.email,
+    required this.name,
+    this.age,
     this.phone,
-    this.profileImageUrl,
+    this.profileImage,
     this.resume,
-    this.skills = const [],
     this.experience,
     this.education,
     this.location,
-    required this.createdAt,
-    this.isActive = true,
+    this.skills = const [],
+    this.points = 0,
+    this.profileCompletionPercentage = 0,
+    this.dateJoined,
   });
 
-  // Método para convertir de JSON (útil para APIs)
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
-      name: json['name'],
       email: json['email'],
+      name: json['name'],
+      age: json['age'],
       phone: json['phone'],
-      profileImageUrl: json['profileImageUrl'],
+      profileImage: json['profile_image'],
       resume: json['resume'],
-      skills: List<String>.from(json['skills'] ?? []),
       experience: json['experience'],
       education: json['education'],
       location: json['location'],
-      createdAt: DateTime.parse(json['createdAt']),
-      isActive: json['isActive'] ?? true,
+      skills: json['skills'] != null 
+          ? List<String>.from(json['skills']) 
+          : [],
+      points: json['points'] ?? 0,
+      profileCompletionPercentage: json['profile_completion_percentage'] ?? 0,
+      dateJoined: json['date_joined'] != null 
+          ? DateTime.parse(json['date_joined']) 
+          : null,
     );
   }
 
-  // Método para convertir a JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
       'email': email,
+      'name': name,
+      'age': age,
       'phone': phone,
-      'profileImageUrl': profileImageUrl,
+      'profile_image': profileImage,
       'resume': resume,
-      'skills': skills,
       'experience': experience,
       'education': education,
       'location': location,
-      'createdAt': createdAt.toIso8601String(),
-      'isActive': isActive,
+      'skills': skills,
+      'points': points,
+      'profile_completion_percentage': profileCompletionPercentage,
+      'date_joined': dateJoined?.toIso8601String(),
     };
   }
 
-  // Método para crear una copia con cambios
   User copyWith({
-    int? id,
-    String? name,
+    String? id,
     String? email,
+    String? name,
+    int? age,
     String? phone,
-    String? profileImageUrl,
+    String? profileImage,
     String? resume,
-    List<String>? skills,
     String? experience,
     String? education,
     String? location,
-    DateTime? createdAt,
-    bool? isActive,
+    List<String>? skills,
+    int? points,
+    int? profileCompletionPercentage,
+    DateTime? dateJoined,
   }) {
     return User(
       id: id ?? this.id,
-      name: name ?? this.name,
       email: email ?? this.email,
+      name: name ?? this.name,
+      age: age ?? this.age,
       phone: phone ?? this.phone,
-      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      profileImage: profileImage ?? this.profileImage,
       resume: resume ?? this.resume,
-      skills: skills ?? this.skills,
       experience: experience ?? this.experience,
       education: education ?? this.education,
       location: location ?? this.location,
-      createdAt: createdAt ?? this.createdAt,
-      isActive: isActive ?? this.isActive,
-    );
-  }
-
-  // Usuario demo para pruebas
-  static User demo() {
-    return User(
-      id: 1,
-      name: 'Usuario Demo',
-      email: 'usuario@demo.com',
-      phone: '+34 123 456 789',
-      skills: ['Flutter', 'Dart', 'Firebase', 'Git'],
-      experience: '3 años como desarrollador móvil',
-      education: 'Ingeniería en Sistemas',
-      location: 'Madrid, España',
-      createdAt: DateTime.now().subtract(const Duration(days: 30)),
+      skills: skills ?? this.skills,
+      points: points ?? this.points,
+      profileCompletionPercentage: profileCompletionPercentage ?? this.profileCompletionPercentage,
+      dateJoined: dateJoined ?? this.dateJoined,
     );
   }
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email)';
+    return 'User(id: $id, name: $name, email: $email, points: $points)';
   }
 }

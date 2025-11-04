@@ -1,41 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/user.dart';
+import '../providers/auth_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final User user;
-
-  const EditProfileScreen({super.key, required this.user});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _emailController;
+  late TextEditingController _ageController;
   late TextEditingController _phoneController;
   late TextEditingController _locationController;
   late TextEditingController _experienceController;
   late TextEditingController _educationController;
   late List<String> _skills;
   final TextEditingController _skillController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.user.name);
-    _emailController = TextEditingController(text: widget.user.email);
-    _phoneController = TextEditingController(text: widget.user.phone ?? '');
-    _locationController = TextEditingController(text: widget.user.location ?? '');
-    _experienceController = TextEditingController(text: widget.user.experience ?? '');
-    _educationController = TextEditingController(text: widget.user.education ?? '');
-    _skills = List.from(widget.user.skills);
+    final user = Provider.of<AuthProvider>(context, listen: false).user;
+    _nameController = TextEditingController(text: user?.name ?? '');
+    _ageController = TextEditingController(text: user?.age?.toString() ?? '');
+    _phoneController = TextEditingController(text: user?.phone ?? '');
+    _locationController = TextEditingController(text: user?.location ?? '');
+    _experienceController = TextEditingController(text: user?.experience ?? '');
+    _educationController = TextEditingController(text: user?.education ?? '');
+    _skills = List.from(user?.skills ?? []);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _emailController.dispose();
+    _ageController.dispose();
     _phoneController.dispose();
     _locationController.dispose();
     _experienceController.dispose();
@@ -44,31 +47,49 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
-  void _saveProfile() {
-    if (_nameController.text.isEmpty || _emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Nombre y email son obligatorios')),
-      );
-      return;
+  Future<void> _saveProfile() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      
+      final profileData = {
+        'name': _nameController.text.trim(),
+        'age': _ageController.text.isNotEmpty ? int.parse(_ageController.text) : null,
+        'phone': _phoneController.text.trim(),
+        'location': _locationController.text.trim(),
+        'experience': _experienceController.text.trim(),
+        'education': _educationController.text.trim(),
+        'skills': _skills,
+      };
+
+      await authProvider.updateProfile(profileData);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Perfil actualizado exitosamente'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al actualizar perfil: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
-
-    final updatedUser = widget.user.copyWith(
-      name: _nameController.text,
-      email: _emailController.text,
-      phone: _phoneController.text.isEmpty ? null : _phoneController.text,
-      location: _locationController.text.isEmpty ? null : _locationController.text,
-      experience: _experienceController.text.isEmpty ? null : _experienceController.text,
-      education: _educationController.text.isEmpty ? null : _educationController.text,
-      skills: _skills,
-    );
-
-    Navigator.pop(context, updatedUser);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Perfil actualizado exitosamente'),
-        backgroundColor: Colors.green,
-      ),
-    );
   }
 
   void _addSkill() {
@@ -99,78 +120,57 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Avatar
-            Center(
-              child: Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: widget.user.profileImageUrl != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.network(widget.user.profileImageUrl!, fit: BoxFit.cover),
-                          )
-                        : Text(
-                            widget.user.name[0].toUpperCase(),
-                            style: const TextStyle(fontSize: 32, color: Colors.white),
-                          ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Colors.blue,
-                      child: IconButton(
-                        icon: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Cambiar foto (Próximamente)')),
-                          );
-                        },
-                        padding: EdgeInsets.zero,
-                      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Información Personal
+                    const Text(
+                      'Información Personal',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    const SizedBox(height: 16),
 
-            const SizedBox(height: 32),
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Nombre completo *',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor ingresa tu nombre';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
 
-            // Información Personal
-            const Text(
-              'Información Personal',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nombre completo *',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.person),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: 'Email *',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _ageController,
+                      decoration: const InputDecoration(
+                        labelText: 'Edad',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.cake),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          final age = int.tryParse(value);
+                          if (age == null || age < 18 || age > 100) {
+                            return 'Ingresa una edad válida (18-100)';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
 
             TextField(
               controller: _phoneController,
@@ -298,9 +298,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
 
             const SizedBox(height: 16),
-          ],
-        ),
-      ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

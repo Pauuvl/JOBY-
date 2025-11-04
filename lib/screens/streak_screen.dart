@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../services/streak_service.dart';
+import 'package:provider/provider.dart';
+import '../services/streak_service_real.dart';
 import '../models/streak.dart';
+import '../providers/auth_provider.dart';
 
 class StreakScreen extends StatefulWidget {
   const StreakScreen({super.key});
@@ -11,10 +13,112 @@ class StreakScreen extends StatefulWidget {
 
 class _StreakScreenState extends State<StreakScreen> {
   final _streakService = StreakService();
+  Streak? _streak;
+  List<Achievement> _achievements = [];
+  List<PointsHistory> _pointsHistory = [];
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final streak = await _streakService.getMyStreak();
+      final achievements = await _streakService.getMyAchievements();
+      final pointsHistory = await _streakService.getPointsHistory();
+
+      setState(() {
+        _streak = streak;
+        _achievements = achievements;
+        _pointsHistory = pointsHistory;
+        _isLoading = false;
+      });
+    } catch (e, stackTrace) {
+      print('ERROR en StreakScreen: $e');
+      print('StackTrace: $stackTrace');
+      setState(() {
+        _error = 'Error al cargar datos:\n$e';
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _recordActivity() async {
+    try {
+      final updatedStreak = await _streakService.recordActivity();
+      final authProvider = context.read<AuthProvider>();
+      await authProvider.refreshUser(); // Actualizar puntos del usuario
+
+      setState(() {
+        _streak = updatedStreak;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('¡+5 puntos! Actividad registrada 🔥'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+
+      await _loadData(); // Recargar todo
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final streak = _streakService.currentStreak;
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Mis Rachas'),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_error != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Mis Rachas'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text(_error!),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _loadData,
+                child: const Text('Reintentar'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final streak = _streak!;
 
     return Scaffold(
       appBar: AppBar(
@@ -77,24 +181,39 @@ class _StreakScreenState extends State<StreakScreen> {
 
             const SizedBox(height: 24),
 
+            // Botón para registrar actividad diaria
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _recordActivity,
+                icon: const Icon(Icons.add_circle_outline),
+                label: const Text('Registrar Actividad Diaria (+5 puntos)'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(16),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
             // Estadísticas
             Row(
               children: [
                 Expanded(
                   child: _buildStatCard(
-                    'Puntos Totales',
-                    '${streak.totalPoints}',
-                    Icons.stars,
-                    Colors.amber,
+                    'Inicios',
+                    '${streak.totalLogins}',
+                    Icons.login,
+                    Colors.blue,
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: _buildStatCard(
-                    'Actividades',
-                    '${streak.activities.length}',
-                    Icons.trending_up,
-                    Colors.blue,
+                    'Aplicaciones',
+                    '${streak.totalApplications}',
+                    Icons.work,
+                    Colors.green,
                   ),
                 ),
               ],
@@ -102,13 +221,13 @@ class _StreakScreenState extends State<StreakScreen> {
 
             const SizedBox(height: 24),
 
-            // Insignias
+            // Logros obtenidos
             const Text(
-              'Insignias Ganadas',
+              'Mis Logros',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            if (streak.badges.isEmpty)
+            if (_achievements.isEmpty)
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -118,11 +237,11 @@ class _StreakScreenState extends State<StreakScreen> {
                         Icon(Icons.emoji_events, size: 48, color: Colors.grey),
                         SizedBox(height: 8),
                         Text(
-                          '¡Aún no tienes insignias!',
+                          '¡Aún no tienes logros!',
                           style: TextStyle(color: Colors.grey),
                         ),
                         Text(
-                          'Mantén tu racha para ganar insignias',
+                          'Completa actividades para desbloquear logros',
                           style: TextStyle(color: Colors.grey, fontSize: 12),
                         ),
                       ],
@@ -131,30 +250,25 @@ class _StreakScreenState extends State<StreakScreen> {
                 ),
               )
             else
-              GridView.builder(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
-                itemCount: streak.badges.length,
+                itemCount: _achievements.length,
                 itemBuilder: (context, index) {
-                  final badge = streak.badges[index];
-                  return _buildBadgeCard(badge);
+                  final achievement = _achievements[index];
+                  return _buildAchievementCard(achievement);
                 },
               ),
 
             const SizedBox(height: 24),
 
-            // Actividades recientes
+            // Historial de puntos
             const Text(
-              'Actividades Recientes',
+              'Historial de Puntos',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            if (streak.activities.isEmpty)
+            if (_pointsHistory.isEmpty)
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -173,35 +287,17 @@ class _StreakScreenState extends State<StreakScreen> {
                 ),
               )
             else
-              ..._streakService.getRecentActivities().map(
-                    (activity) => _buildActivityCard(activity),
-                  ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _pointsHistory.length,
+                itemBuilder: (context, index) {
+                  final history = _pointsHistory[index];
+                  return _buildPointsHistoryCard(history);
+                },
+              ),
 
             const SizedBox(height: 24),
-
-            // Botón de prueba (para demo)
-            ElevatedButton.icon(
-              onPressed: () {
-                setState(() {
-                  _streakService.recordActivity(
-                    'daily_login',
-                    'Ingreso diario a la aplicación',
-                    points: 10,
-                  );
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('¡+10 puntos! Racha actualizada 🔥'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-              },
-              icon: const Icon(Icons.add),
-              label: const Text('Registrar Actividad (Demo)'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-              ),
-            ),
           ],
         ),
       ),
@@ -237,27 +333,39 @@ class _StreakScreenState extends State<StreakScreen> {
     );
   }
 
-  Widget _buildBadgeCard(AchievementBadge badge) {
+  Widget _buildAchievementCard(Achievement achievement) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: ListTile(
+        leading: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.amber.shade100,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Center(
+            child: Text(
+              achievement.icon,
+              style: const TextStyle(fontSize: 24),
+            ),
+          ),
+        ),
+        title: Text(
+          achievement.name,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(achievement.description),
+        trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Icon(Icons.stars, color: Colors.amber, size: 20),
             Text(
-              badge.icon,
-              style: const TextStyle(fontSize: 36),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              badge.name,
+              '+${achievement.pointsReward}',
               style: const TextStyle(
-                fontSize: 10,
                 fontWeight: FontWeight.bold,
+                color: Colors.amber,
               ),
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
@@ -265,29 +373,29 @@ class _StreakScreenState extends State<StreakScreen> {
     );
   }
 
-  Widget _buildActivityCard(Activity activity) {
+  Widget _buildPointsHistoryCard(PointsHistory history) {
     IconData icon;
     Color color;
 
-    switch (activity.type) {
-      case 'job_applied':
-        icon = Icons.work;
-        color = Colors.blue;
-        break;
-      case 'profile_updated':
-        icon = Icons.person;
-        color = Colors.green;
-        break;
+    switch (history.action) {
       case 'daily_login':
         icon = Icons.login;
+        color = Colors.blue;
+        break;
+      case 'job_application':
+        icon = Icons.work;
+        color = Colors.green;
+        break;
+      case 'profile_update':
+        icon = Icons.person;
         color = Colors.orange;
         break;
-      case 'friend_referred':
-        icon = Icons.group_add;
-        color = Colors.purple;
+      case 'achievement_earned':
+        icon = Icons.emoji_events;
+        color = Colors.amber;
         break;
       default:
-        icon = Icons.check_circle;
+        icon = Icons.add_circle;
         color = Colors.grey;
     }
 
@@ -298,16 +406,16 @@ class _StreakScreenState extends State<StreakScreen> {
           backgroundColor: color.withOpacity(0.2),
           child: Icon(icon, color: color),
         ),
-        title: Text(activity.description),
+        title: Text(history.actionDisplay),
         subtitle: Text(
-          _formatDate(activity.date),
+          history.description ?? '',
           style: const TextStyle(fontSize: 12),
         ),
         trailing: Text(
-          '+${activity.points} pts',
-          style: const TextStyle(
+          '${history.points >= 0 ? '+' : ''}${history.points} pts',
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.green,
+            color: history.points >= 0 ? Colors.green : Colors.red,
           ),
         ),
       ),

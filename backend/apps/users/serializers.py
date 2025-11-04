@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'name', 'username', 'phone', 'location',
+            'id', 'email', 'name', 'username', 'phone', 'location', 'age',
             'experience', 'education', 'skills', 'profile_image', 'resume',
             'is_active', 'email_verified', 'created_at', 'updated_at',
             'profile_completion'
@@ -24,21 +24,24 @@ class UserSerializer(serializers.ModelSerializer):
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """Serializer for user registration"""
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password_confirm = serializers.CharField(write_only=True, required=True)
     
     class Meta:
         model = User
-        fields = ['email', 'name', 'username', 'password', 'password_confirm']
-    
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
-            raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})
-        return attrs
+        fields = ['email', 'name', 'password']
     
     def create(self, validated_data):
-        validated_data.pop('password_confirm')
+        # Generar username automáticamente desde el email
+        username = validated_data['email'].split('@')[0]
+        
+        # Si el username ya existe, agregar un número
+        base_username = username
+        counter = 1
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+        
         user = User.objects.create_user(
-            username=validated_data['username'],
+            username=username,
             email=validated_data['email'],
             name=validated_data['name'],
             password=validated_data['password']

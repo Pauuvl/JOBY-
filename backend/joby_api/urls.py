@@ -12,7 +12,7 @@ urlpatterns = [
     path('api/jobs/', include('apps.jobs.urls')),
     path('api/applications/', include('apps.applications.urls')),
     path('api/streaks/', include('apps.streaks.urls')),
-    path('api/chatbot/', include('apps.chatbot.urls')),
+    # path('api/chatbot/', include('apps.chatbot.urls')),
     path('api/notifications/', include('apps.notifications.urls')),
 ]
 

@@ -33,26 +33,34 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
       setState(() {
         _jobs = [
           Job(
-            id: 1,
+            id: '1',
             title: 'Desarrollador Flutter Senior',
-            company: 'TechCorp',
+            companyName: 'TechCorp',
             location: 'Remoto',
-            salary: '\$80,000 - \$100,000',
+            salaryMin: 80000,
+            salaryMax: 100000,
             description: 'Buscamos un desarrollador Flutter experimentado...',
-            requirements: 'Flutter, Dart, Firebase',
-            type: 'Remoto',
-            postedDate: DateTime.now().subtract(const Duration(days: 2)),
+            requirements: ['Flutter', 'Dart', 'Firebase'],
+            skillsRequired: ['Flutter', 'Dart', 'Firebase'],
+            jobType: 'full_time',
+            experienceLevel: 'senior',
+            remoteOk: true,
+            postedAt: DateTime.now().subtract(const Duration(days: 2)),
           ),
           Job(
-            id: 2,
+            id: '2',
             title: 'Diseñador UX/UI',
-            company: 'StartupXYZ',
+            companyName: 'StartupXYZ',
             location: 'Madrid, España',
-            salary: '\$45,000 - \$60,000',
+            salaryMin: 45000,
+            salaryMax: 60000,
             description: 'Únete a nuestro equipo de diseño...',
-            requirements: 'Figma, Adobe XD, Sketch',
-            type: 'Híbrido',
-            postedDate: DateTime.now().subtract(const Duration(days: 1)),
+            requirements: ['Figma', 'Adobe XD', 'Sketch'],
+            skillsRequired: ['Figma', 'Adobe XD', 'Sketch'],
+            jobType: 'full_time',
+            experienceLevel: 'mid_level',
+            remoteOk: false,
+            postedAt: DateTime.now().subtract(const Duration(days: 1)),
           ),
         ];
         _isLoading = false;
@@ -99,6 +107,10 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
   }
 
   Widget _buildJobCard(Job job) {
+    final salary = job.salaryMin != null && job.salaryMax != null
+        ? '\$${job.salaryMin!.toInt()}k - \$${job.salaryMax!.toInt()}k'
+        : 'Salario competitivo';
+    
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
@@ -107,9 +119,9 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(job.company),
-            Text('${job.location} • ${job.type}'),
-            Text(job.salary, style: const TextStyle(color: Colors.green)),
+            Text(job.companyName),
+            Text('${job.location} • ${job.jobType}'),
+            Text(salary, style: const TextStyle(color: Colors.green)),
           ],
         ),
         onTap: () {

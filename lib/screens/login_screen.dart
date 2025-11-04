@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/auth_service.dart';
+import '../services/api_service.dart';
+import '../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _authService = AuthService();
   
   bool _isLoading = false;
   bool _isRegisterMode = false;
@@ -41,26 +46,23 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     
     try {
-      // TODO: Conectar con el backend Django
-      // final response = await http.post(
-      //   Uri.parse('http://localhost:8000/api/auth/login/'),
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: jsonEncode({
-      //     'email': _emailController.text,
-      //     'password': _passwordController.text,
-      //   }),
-      // );
-      
-      // Simular autenticación por ahora
-      await Future.delayed(const Duration(seconds: 1));
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final success = await authProvider.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
       
       if (mounted) {
-        _showMessage('¡Bienvenido a Joby! 🎉', isError: false);
-        Navigator.pushReplacementNamed(context, '/home');
+        if (success) {
+          _showMessage('¡Bienvenido a Joby! 🎉', isError: false);
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          _showMessage(authProvider.error ?? 'Error al iniciar sesión');
+        }
       }
     } catch (e) {
       if (mounted) {
-        _showMessage('Error al iniciar sesión: $e');
+        _showMessage('Error al iniciar sesión. Verifica tu conexión.');
       }
     } finally {
       if (mounted) {
@@ -80,29 +82,24 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     
     try {
-      // TODO: Conectar con el backend Django
-      // final response = await http.post(
-      //   Uri.parse('http://localhost:8000/api/auth/register/'),
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: jsonEncode({
-      //     'email': _emailController.text,
-      //     'name': _nameController.text,
-      //     'username': _emailController.text.split('@')[0],
-      //     'password': _passwordController.text,
-      //     'password_confirm': _confirmPasswordController.text,
-      //   }),
-      // );
-      
-      // Simular registro por ahora
-      await Future.delayed(const Duration(seconds: 1));
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final success = await authProvider.register(
+        _emailController.text.trim(),
+        _passwordController.text,
+        _nameController.text.trim(),
+      );
       
       if (mounted) {
-        _showMessage('¡Cuenta creada exitosamente! 🎉', isError: false);
-        Navigator.pushReplacementNamed(context, '/home');
+        if (success) {
+          _showMessage('¡Cuenta creada exitosamente! 🎉', isError: false);
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          _showMessage(authProvider.error ?? 'Error al registrarse');
+        }
       }
     } catch (e) {
       if (mounted) {
-        _showMessage('Error al registrarse: $e');
+        _showMessage('Error al registrarse. Verifica tu conexión.');
       }
     } finally {
       if (mounted) {

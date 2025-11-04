@@ -27,6 +27,7 @@ def register_user(request):
     Register a new user
     POST /api/auth/register/
     """
+    print(f"DEBUG - Register request data: {request.data}")  # Debug
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
         with transaction.atomic():
@@ -38,12 +39,11 @@ def register_user(request):
             return Response({
                 'message': 'Usuario registrado exitosamente',
                 'user': UserSerializer(user).data,
-                'tokens': {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                }
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
     
+    print(f"DEBUG - Serializer errors: {serializer.errors}")  # Debug
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -54,40 +54,37 @@ def login_user(request):
     Login user and return JWT tokens
     POST /api/auth/login/
     """
+    print(f"DEBUG - Login request data: {request.data}")
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']
         password = serializer.validated_data['password']
         
-        # Authenticate user
-        try:
-            user = User.objects.get(email=email)
-            user = authenticate(username=user.username, password=password)
-        except User.DoesNotExist:
-            user = None
+        # Authenticate user directly with email (USERNAME_FIELD = 'email')
+        authenticated_user = authenticate(request, username=email, password=password)
         
-        if user is not None:
-            if user.is_active:
+        if authenticated_user is not None:
+            if authenticated_user.is_active:
                 # Generate JWT tokens
-                refresh = RefreshToken.for_user(user)
+                refresh = RefreshToken.for_user(authenticated_user)
                 
                 return Response({
                     'message': 'Login exitoso',
-                    'user': UserSerializer(user).data,
-                    'tokens': {
-                        'refresh': str(refresh),
-                        'access': str(refresh.access_token),
-                    }
+                    'user': UserSerializer(authenticated_user).data,
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
                 }, status=status.HTTP_200_OK)
             else:
                 return Response({
                     'error': 'Cuenta desactivada'
                 }, status=status.HTTP_403_FORBIDDEN)
         else:
+            print(f"DEBUG - Login failed for {email}")
             return Response({
                 'error': 'Credenciales inválidas'
             }, status=status.HTTP_401_UNAUTHORIZED)
     
+    print(f"DEBUG - Serializer errors: {serializer.errors}")
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -120,6 +117,23 @@ def get_current_user(request):
     """
     serializer = UserSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    """
+    Update user profile
+    PUT /api/auth/profile/
+    """
+    user = request.user
+    serializer = UserSerializer(user, data=request.data, partial=True)
+    
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserProfileUpdateView(generics.UpdateAPIView):

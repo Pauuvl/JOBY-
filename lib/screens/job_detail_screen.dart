@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/job.dart';
-import '../services/streak_service.dart';
 
 class JobDetailScreen extends StatefulWidget {
   final Job job;
@@ -14,7 +13,6 @@ class JobDetailScreen extends StatefulWidget {
 class _JobDetailScreenState extends State<JobDetailScreen> {
   bool _isSaved = false;
   bool _hasApplied = false;
-  final _streakService = StreakService();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +77,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    widget.job.company,
+                    widget.job.companyName,
                     style: const TextStyle(fontSize: 18, color: Colors.white70),
                   ),
                 ],
@@ -93,8 +91,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildInfoChip(Icons.location_on, widget.job.location),
-                  _buildInfoChip(Icons.work_outline, widget.job.type),
-                  _buildInfoChip(Icons.access_time, _getTimeAgo(widget.job.postedDate)),
+                  _buildInfoChip(Icons.work_outline, widget.job.jobType),
+                  _buildInfoChip(Icons.access_time, _getTimeAgo(widget.job.postedAt)),
                 ],
               ),
             ),
@@ -109,7 +107,9 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   const Icon(Icons.attach_money, color: Colors.green, size: 28),
                   const SizedBox(width: 8),
                   Text(
-                    widget.job.salary,
+                    widget.job.salaryMin != null && widget.job.salaryMax != null
+                        ? '\$${widget.job.salaryMin!.toInt()}k - \$${widget.job.salaryMax!.toInt()}k'
+                        : 'Salario competitivo',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             // Requisitos
             _buildSection(
               'Requisitos',
-              widget.job.requirements,
+              widget.job.requirements.map((r) => '• $r').join('\n'),
               Icons.checklist,
             ),
 
@@ -258,16 +258,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
           ElevatedButton(
             onPressed: () {
               setState(() => _hasApplied = true);
-              // Registrar actividad en el sistema de rachas
-              _streakService.recordActivity(
-                'job_applied',
-                'Aplicaste a ${widget.job.title}',
-                points: 20,
-              );
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('¡Aplicación enviada exitosamente! +20 puntos 🎉'),
+                  content: Text('¡Aplicación enviada exitosamente!'),
                   backgroundColor: Colors.green,
                   duration: Duration(seconds: 3),
                 ),

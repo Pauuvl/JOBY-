@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/user.dart';
+import '../providers/auth_provider.dart';
 import 'streak_screen.dart';
 import 'edit_profile_screen.dart';
 
@@ -11,39 +13,35 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late User _user;
-
   @override
   void initState() {
     super.initState();
-    _user = User.demo(); // Usando usuario demo
   }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final user = authProvider.user;
+    
+    if (user == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Mi Perfil')),
+        body: const Center(child: Text('No hay usuario logueado')),
+      );
+    }
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi Perfil'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              final updated = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(user: _user),
-                ),
-              );
-              if (updated != null) {
-                setState(() => _user = updated);
-              }
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
+            onPressed: () async {
+              await authProvider.logout();
+              if (context.mounted) {
+                Navigator.pushReplacementNamed(context, '/login');
+              }
             },
           ),
         ],
@@ -52,24 +50,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _buildProfileHeader(),
+            _buildProfileHeader(user),
             const SizedBox(height: 20),
             _buildInfoCard('Información Personal', [
-              _buildInfoRow(Icons.email, 'Email', _user.email),
-              if (_user.phone != null)
-                _buildInfoRow(Icons.phone, 'Teléfono', _user.phone!),
-              if (_user.location != null)
-                _buildInfoRow(Icons.location_on, 'Ubicación', _user.location!),
+              _buildInfoRow(Icons.email, 'Email', user.email),
+              if (user.phone != null && user.phone!.isNotEmpty)
+                _buildInfoRow(Icons.phone, 'Teléfono', user.phone!),
+              if (user.location != null && user.location!.isNotEmpty)
+                _buildInfoRow(Icons.location_on, 'Ubicación', user.location!),
+              _buildInfoRow(Icons.star, 'Puntos', '${user.points} pts'),
             ]),
             const SizedBox(height: 16),
-            _buildInfoCard('Experiencia', [
-              if (_user.experience != null)
-                _buildInfoRow(Icons.work, 'Experiencia', _user.experience!),
-              if (_user.education != null)
-                _buildInfoRow(Icons.school, 'Educación', _user.education!),
-            ]),
-            const SizedBox(height: 16),
-            _buildSkillsCard(),
+            if (user.experience != null && user.experience!.isNotEmpty)
+              _buildExperienceCard(user),
+            if (user.experience != null && user.experience!.isNotEmpty)
+              const SizedBox(height: 16),
+            if (user.education != null && user.education!.isNotEmpty)
+              _buildEducationCard(user),
+            if (user.education != null && user.education!.isNotEmpty)
+              const SizedBox(height: 16),
+            _buildSkillsCard(user),
             const SizedBox(height: 16),
             _buildStreakButton(),
           ],
@@ -126,40 +126,72 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(User user) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: _user.profileImageUrl != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.network(_user.profileImageUrl!, fit: BoxFit.cover),
-                    )
-                  : Text(
-                      _user.name[0].toUpperCase(),
-                      style: const TextStyle(fontSize: 32, color: Colors.white),
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    user.name[0].toUpperCase(),
+                    style: const TextStyle(fontSize: 32, color: Colors.white),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: GestureDetector(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                     ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             Text(
-              _user.name,
+              user.name,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            if (user.age != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                '${user.age} años',
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            ],
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: _user.isActive ? Colors.green : Colors.red,
+                color: Colors.green,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                _user.isActive ? 'Activo' : 'Inactivo',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+              child: const Text(
+                'Activo',
+                style: TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),
           ],
@@ -208,7 +240,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSkillsCard() {
+  Widget _buildExperienceCard(User user) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: const [
+                Icon(Icons.work, color: Colors.blue),
+                SizedBox(width: 8),
+                Text(
+                  'Experiencia Profesional',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              user.experience ?? '',
+              style: const TextStyle(fontSize: 14, height: 1.5),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEducationCard(User user) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: const [
+                Icon(Icons.school, color: Colors.green),
+                SizedBox(width: 8),
+                Text(
+                  'Educación',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              user.education ?? '',
+              style: const TextStyle(fontSize: 14, height: 1.5),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkillsCard(User user) {
+    if (user.skills.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -223,10 +315,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: _user.skills
+              children: user.skills
                   .map((skill) => Chip(
                         label: Text(skill),
-                        backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                        backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                       ))
                   .toList(),
             ),
