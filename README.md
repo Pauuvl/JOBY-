@@ -47,7 +47,6 @@ Inspirado en apps exitosas como Duolingo y Streak (de la imagen P-03), Joby incl
 ### Frontend (✅ Implementado)
 - **Flutter 3.9+** - Framework multiplataforma
 - **Dart** - Lenguaje de programación
-- **Material Design 3** - Sistema de diseño moderno
 
 ### Backend (🚧 En desarrollo)
 - **Django REST Framework** - API REST
@@ -170,15 +169,6 @@ El diseño de Joby se inspira en:
 - **Apps de gamificación** como Duolingo
 - **Plataformas de empleo** modernas como LinkedIn
 - **Concepto P-03 "Streak: Mobile Service"** de Magneto
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor:
-1. Haz fork del proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 
 ## 👥 Autores
