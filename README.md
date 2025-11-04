@@ -180,19 +180,12 @@ Las contribuciones son bienvenidas. Por favor:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📝 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
 
 ## 👥 Autores
 
-- **Cristian** - [Pauuvl](https://github.com/Pauuvl)
+-Cristian Cabarcas , Paulina Velazquez , Yilmar Murillo , Fabian Buritica
 
-## 🙏 Agradecimientos
 
-- Concepto P-03 "Streak: Mobile Service" de Magneto por la inspiración en gamificación
-- Comunidad de Flutter
-- Contribuidores de código abierto
 
 ---
 
