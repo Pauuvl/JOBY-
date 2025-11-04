@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'apps.jobs',
     'apps.applications',
     'apps.streaks',
-    'apps.chatbot',
+    #'apps.chatbot',
     'apps.notifications',
 ]
 
