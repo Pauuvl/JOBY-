@@ -72,6 +72,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _buildSkillsCard(user),
             const SizedBox(height: 16),
             _buildStreakButton(),
+            const SizedBox(height: 12),
+            _buildCoursesButton(),
+            const SizedBox(height: 12),
+            _buildMentorshipButton(),
+            const SizedBox(height: 12),
+            _buildReferralButton(),
           ],
         ),
       ),
@@ -113,6 +119,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 4),
                     Text(
                       'Puntos, insignias y actividades',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCoursesButton() {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/recommended-courses');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.school, color: Colors.blue, size: 32),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Cursos Recomendados',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Cursos personalizados para ti',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMentorshipButton() {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/mentorship');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.teal.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.people_alt, color: Colors.teal, size: 32),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Encuentra Mentores',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Conecta con profesionales exitosos',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReferralButton() {
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/referral');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Colors.purple, Colors.deepPurple],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(Icons.card_giftcard, color: Colors.white, size: 32),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Invita Amigos',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Gana puntos por cada referido',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],

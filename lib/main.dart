@@ -6,6 +6,11 @@ import 'screens/job_detail_screen.dart';
 import 'screens/job_search_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/streak_screen.dart';
+import 'screens/notifications_screen.dart';
+import 'screens/completed_challenges_screen.dart';
+import 'screens/recommended_courses_screen.dart';
+import 'screens/mentorship_screen.dart';
+import 'screens/referral_screen.dart';
 import 'providers/auth_provider.dart';
 import 'models/job.dart';
 
@@ -81,6 +86,11 @@ class MyApp extends StatelessWidget {
           '/job-search': (context) => const JobSearchScreen(),
           '/streak': (context) => const StreakScreen(),
           '/profile': (context) => const ProfileScreen(),
+          '/notifications': (context) => const NotificationsScreen(),
+          '/completed-challenges': (context) => const CompletedChallengesScreen(),
+          '/recommended-courses': (context) => const RecommendedCoursesScreen(),
+          '/mentorship': (context) => const MentorshipScreen(),
+          '/referral': (context) => const ReferralScreen(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/job-detail') {

@@ -308,3 +308,86 @@ def get_daily_message(request):
     cache.set(cache_key, message_data, 86400)
     
     return Response(message_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def job_alert_preferences(request):
+    """
+    Get or update job alert preferences
+    GET/PUT/PATCH /api/auth/job-alerts/
+    """
+    from .models import JobAlertPreference
+    from .serializers import JobAlertPreferenceSerializer
+    
+    # Get or create preferences
+    preferences, created = JobAlertPreference.objects.get_or_create(user=request.user)
+    
+    if request.method == 'GET':
+        serializer = JobAlertPreferenceSerializer(preferences)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    elif request.method in ['PUT', 'PATCH']:
+        partial = request.method == 'PATCH'
+        serializer = JobAlertPreferenceSerializer(preferences, data=request.data, partial=partial)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def find_matching_jobs(request):
+    """
+    Find jobs that match user's profile
+    GET /api/auth/matching-jobs/
+    """
+    from apps.jobs.services import JobMatchingService
+    from apps.jobs.serializers import JobSerializer
+    
+    min_score = int(request.query_params.get('min_score', 60))
+    limit = int(request.query_params.get('limit', 10))
+    
+    matching_jobs = JobMatchingService.find_matching_jobs(
+        user=request.user,
+        min_score=min_score,
+        limit=limit
+    )
+    
+    results = []
+    for job_data in matching_jobs:
+        job_info = JobSerializer(job_data['job']).data
+        job_info['match_score'] = job_data['score']
+        job_info['matching_skills'] = job_data['matching_skills']
+        results.append(job_info)
+    
+    return Response({
+        'count': len(results),
+        'matches': results
+    }, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def check_job_alerts(request):
+    """
+    Manually check for new job alerts
+    POST /api/auth/check-alerts/
+    """
+    from apps.jobs.services import JobMatchingService
+    
+    notification = JobMatchingService.check_new_jobs_for_user(request.user)
+    
+    if notification:
+        from apps.notifications.serializers import NotificationSerializer
+        return Response({
+            'message': 'Alert sent successfully',
+            'notification': NotificationSerializer(notification).data
+        }, status=status.HTTP_200_OK)
+    else:
+        return Response({
+            'message': 'No new matching jobs found or alerts are disabled'
+        }, status=status.HTTP_200_OK)

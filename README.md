@@ -54,16 +54,10 @@ Inspirado en apps exitosas como Duolingo y Streak (de la imagen P-03), Joby incl
 - **JWT** - Autenticación segura
 - **Docker** - Containerización
 
-### Inteligencia Artificial (📅 Planeado)
-- **OpenAI GPT-4 / Google Gemini** - Chatbot inteligente
-- **Recomendaciones personalizadas** basadas en perfil
-- **Análisis de compatibilidad** trabajo-candidato
-
 ### Notificaciones (📅 Planeado)
 - **Firebase Cloud Messaging** - Push notifications
 - **Notificaciones de nuevos trabajos** compatibles
 - **Recordatorios de racha diaria**
-- **Mensajes personalizados del chatbot**
 
 ## 🚀 Instalación y Uso
 
@@ -143,24 +137,15 @@ lib/
 - [ ] Caché local
 - [ ] Manejo de estado (Provider/Riverpod/Bloc)
 
-### Fase 4: IA y Chatbot
-- [ ] Integración con OpenAI/Gemini
-- [ ] Chatbot conversacional
-- [ ] Recomendaciones personalizadas
-- [ ] Análisis de perfil vs. trabajos
-
-### Fase 5: Notificaciones
+### Fase 4: Notificaciones
 - [ ] Firebase Cloud Messaging
 - [ ] Notificaciones push
 - [ ] Notificaciones programadas para rachas
 - [ ] Alertas de nuevos trabajos
 
-### Fase 6: Características Avanzadas
+### Fase 5: Características Avanzadas
 - [ ] Sistema de referidos
-- [ ] Chat entre candidatos
-- [ ] Videollamadas para entrevistas
-- [ ] Análisis de CV con IA
-- [ ] PWA (Progressive Web App)
+
 
 ## 🎨 Diseño
 

@@ -49,7 +49,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
             'message': f'Marked {updated} notifications as read'
         })
     
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=['post', 'delete'])
     def clear_all(self, request):
         """Delete all notifications"""
         deleted_count, _ = self.get_queryset().delete()

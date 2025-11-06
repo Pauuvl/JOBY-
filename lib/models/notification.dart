@@ -72,6 +72,56 @@ class AppNotification {
     }
   }
 
+  String get typeDisplayName => typeDisplay;
+
+  String get typeIcon {
+    switch (notificationType) {
+      case 'application_status':
+        return '📋';
+      case 'new_job':
+        return '💼';
+      case 'achievement':
+        return '🏆';
+      case 'streak':
+        return '🔥';
+      case 'message':
+        return '💬';
+      case 'reminder':
+        return '⏰';
+      case 'system':
+        return '⚙️';
+      default:
+        return '📬';
+    }
+  }
+
+  String get timeAgo {
+    final now = DateTime.now();
+    final difference = now.difference(createdAt);
+
+    if (difference.inSeconds < 60) {
+      return 'Hace un momento';
+    } else if (difference.inMinutes < 60) {
+      final minutes = difference.inMinutes;
+      return 'Hace $minutes ${minutes == 1 ? "minuto" : "minutos"}';
+    } else if (difference.inHours < 24) {
+      final hours = difference.inHours;
+      return 'Hace $hours ${hours == 1 ? "hora" : "horas"}';
+    } else if (difference.inDays < 7) {
+      final days = difference.inDays;
+      return 'Hace $days ${days == 1 ? "día" : "días"}';
+    } else if (difference.inDays < 30) {
+      final weeks = (difference.inDays / 7).floor();
+      return 'Hace $weeks ${weeks == 1 ? "semana" : "semanas"}';
+    } else if (difference.inDays < 365) {
+      final months = (difference.inDays / 30).floor();
+      return 'Hace $months ${months == 1 ? "mes" : "meses"}';
+    } else {
+      final years = (difference.inDays / 365).floor();
+      return 'Hace $years ${years == 1 ? "año" : "años"}';
+    }
+  }
+
   AppNotification copyWith({
     String? id,
     String? notificationType,

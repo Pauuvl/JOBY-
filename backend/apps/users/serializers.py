@@ -3,7 +3,7 @@ Serializers for User Model
 """
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import User, MotivationalMessage
+from .models import User, MotivationalMessage, JobAlertPreference
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,10 +15,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'email', 'name', 'username', 'phone', 'location', 'age',
             'experience', 'education', 'skills', 'profile_image', 'resume',
-            'is_active', 'email_verified', 'created_at', 'updated_at',
+            'is_active', 'email_verified', 'points', 'created_at', 'updated_at',
             'profile_completion'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at', 'email_verified']
+        read_only_fields = ['id', 'created_at', 'updated_at', 'email_verified', 'points']
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -95,3 +95,17 @@ class MotivationalMessageSerializer(serializers.ModelSerializer):
         model = MotivationalMessage
         fields = ['id', 'message', 'author', 'category', 'created_at']
         read_only_fields = ['id', 'created_at']
+
+
+class JobAlertPreferenceSerializer(serializers.ModelSerializer):
+    """Serializer for job alert preferences"""
+    
+    class Meta:
+        model = JobAlertPreference
+        fields = [
+            'id', 'is_enabled', 'frequency', 'match_by_skills', 
+            'match_by_location', 'match_by_experience', 'preferred_job_types',
+            'preferred_locations', 'remote_only', 'min_salary', 'last_alert_sent',
+            'created_at', 'updated_at'
+        ]
+        read_only_fields = ['id', 'last_alert_sent', 'created_at', 'updated_at']

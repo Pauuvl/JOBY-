@@ -6,3 +6,6 @@ class UsersConfig(AppConfig):
     name = 'apps.users'
     label = 'users'  # Django label used for AUTH_USER_MODEL
     verbose_name = 'Users'
+    
+    def ready(self):
+        import apps.users.signals  # noqa

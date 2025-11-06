@@ -117,6 +117,15 @@ class _HomeTabState extends State<HomeTab> {
       appBar: AppBar(
         title: const Text('Joby'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.pushNamed(context, '/notifications');
+            },
+            tooltip: 'Notificaciones',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

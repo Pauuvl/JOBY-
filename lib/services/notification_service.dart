@@ -12,45 +12,71 @@ class NotificationService {
 
   // Obtener todas las notificaciones
   Future<List<AppNotification>> getNotifications() async {
-    final response = await _api.get('${ApiConfig.notifications}/notifications/');
-    final List<dynamic> data = jsonDecode(response.body);
+    final response = await _api.get('${ApiConfig.notifications}/');
+    final responseData = jsonDecode(response.body);
+    
+    // Si la respuesta es paginada (tiene 'results'), usa eso
+    // Si es un array directo, úsalo como está
+    final List<dynamic> data = responseData is Map 
+        ? (responseData['results'] ?? [])
+        : responseData;
+    
     return data.map((json) => AppNotification.fromJson(json)).toList();
   }
 
   // Obtener notificaciones no leídas
   Future<List<AppNotification>> getUnreadNotifications() async {
     final response = await _api.get(
-      '${ApiConfig.notifications}/notifications/unread/',
+      '${ApiConfig.notifications}/unread/',
     );
-    final List<dynamic> data = jsonDecode(response.body);
+    final responseData = jsonDecode(response.body);
+    
+    // Manejar respuesta paginada o array directo
+    final List<dynamic> data = responseData is Map 
+        ? (responseData['results'] ?? [])
+        : responseData;
+    
     return data.map((json) => AppNotification.fromJson(json)).toList();
   }
 
   // Marcar como leída
   Future<void> markAsRead(String notificationId) async {
     await _api.post(
-      '${ApiConfig.notifications}/notifications/$notificationId/mark_as_read/',
+      '${ApiConfig.notifications}/$notificationId/mark_as_read/',
     );
   }
 
   // Marcar todas como leídas
   Future<void> markAllAsRead() async {
     await _api.post(
-      '${ApiConfig.notifications}/notifications/mark_all_as_read/',
+      '${ApiConfig.notifications}/mark_all_as_read/',
     );
+  }
+
+  // Eliminar notificación
+  Future<void> deleteNotification(String notificationId) async {
+    await _api.delete(
+      '${ApiConfig.notifications}/$notificationId/',
+    );
+  }
+
+  // Obtener cantidad de notificaciones no leídas
+  Future<int> getUnreadCount() async {
+    final stats = await getStats();
+    return stats['unread_count'] ?? 0;
   }
 
   // Limpiar todas
   Future<void> clearAll() async {
     await _api.post(
-      '${ApiConfig.notifications}/notifications/clear_all/',
+      '${ApiConfig.notifications}/clear_all/',
     );
   }
 
   // Obtener estadísticas
   Future<Map<String, dynamic>> getStats() async {
     final response = await _api.get(
-      '${ApiConfig.notifications}/notifications/stats/',
+      '${ApiConfig.notifications}/stats/',
     );
     return jsonDecode(response.body);
   }

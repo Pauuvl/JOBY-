@@ -27,6 +27,9 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True, verbose_name='Active')
     email_verified = models.BooleanField(default=False, verbose_name='Email Verified')
     
+    # Points and Gamification
+    points = models.IntegerField(default=0, verbose_name='Puntos Acumulados')
+    
     # FCM Token for push notifications
     fcm_token = models.CharField(max_length=255, blank=True, null=True, verbose_name='FCM Token')
     
@@ -110,3 +113,61 @@ class MotivationalMessage(models.Model):
         """Incrementar el contador de veces mostrado"""
         self.times_shown += 1
         self.save(update_fields=['times_shown'])
+
+
+class JobAlertPreference(models.Model):
+    """Preferencias de alertas de trabajo del usuario"""
+    
+    FREQUENCY_CHOICES = [
+        ('instant', 'Inmediata'),
+        ('daily', 'Diaria'),
+        ('weekly', 'Semanal'),
+        ('disabled', 'Desactivada'),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.OneToOneField('User', on_delete=models.CASCADE, related_name='job_alert_preference')
+    
+    # Configuración de alertas
+    is_enabled = models.BooleanField(default=True, verbose_name='Alertas Activadas')
+    frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES, default='instant', verbose_name='Frecuencia')
+    
+    # Criterios de matching
+    match_by_skills = models.BooleanField(default=True, verbose_name='Coincidir por Habilidades')
+    match_by_location = models.BooleanField(default=True, verbose_name='Coincidir por Ubicación')
+    match_by_experience = models.BooleanField(default=True, verbose_name='Coincidir por Experiencia')
+    
+    # Preferencias de trabajo
+    preferred_job_types = models.JSONField(default=list, blank=True, verbose_name='Tipos de Trabajo Preferidos')
+    preferred_locations = models.JSONField(default=list, blank=True, verbose_name='Ubicaciones Preferidas')
+    remote_only = models.BooleanField(default=False, verbose_name='Solo Remoto')
+    
+    # Salario mínimo deseado
+    min_salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name='Salario Mínimo')
+    
+    # Última alerta enviada
+    last_alert_sent = models.DateTimeField(null=True, blank=True, verbose_name='Última Alerta Enviada')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'job_alert_preferences'
+        verbose_name = 'Preferencia de Alerta de Trabajo'
+        verbose_name_plural = 'Preferencias de Alertas de Trabajo'
+    
+    def __str__(self):
+        return f"Alertas de {self.user.name} - {'Activadas' if self.is_enabled else 'Desactivadas'}"
+
+
+# Import course models
+from .models_courses import Company, Course, UserCourse
+
+# Import mentorship models
+from .models_mentorship import SuccessStory, ProfileMatch, MentorshipRequest
+
+__all__ = [
+    'User', 'MotivationalMessage', 'JobAlertPreference',
+    'Company', 'Course', 'UserCourse',
+    'SuccessStory', 'ProfileMatch', 'MentorshipRequest'
+]
