@@ -1,0 +1,2308 @@
+[
+  {
+    "model": "users.user",
+    "pk": "211671a0-5bfa-400e-a972-10736895a38a",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$tCONzNgfnlfRapCSNqsLYB$BHs+pNfZ+JwXiX7rikpln0/mgROj0Q1tJZbqfdlSqfI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "laura_cloud",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-11-06T20:24:52.143Z",
+      "email": "laura@example.com",
+      "name": "Laura Fernández",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": "Cloud Architect con 6 años de experiencia",
+      "education": null,
+      "location": "Madrid",
+      "skills": [
+        "Azure",
+        "Kubernetes",
+        "Docker",
+        "DevOps",
+        "CI/CD"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-11-06T20:24:52.143Z",
+      "updated_at": "2025-11-06T20:24:52.274Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "6cfc4b0b-957e-41d2-95b3-9707eb03ae59",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$D7DlOXoa3t2xYUHHOPWqXK$5SK01T7sujyjUTchD7XGLl7DOBL7dHV/Ceyi9STLAno=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "pedro_mobile",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-11-06T20:24:52.009Z",
+      "email": "pedro@example.com",
+      "name": "Pedro López",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": "Mobile Developer con 4 años de experiencia",
+      "education": null,
+      "location": "Sevilla",
+      "skills": [
+        "Kotlin",
+        "Android",
+        "Java",
+        "Firebase",
+        "REST APIs"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-11-06T20:24:52.009Z",
+      "updated_at": "2025-11-06T20:24:52.137Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "56ec4cdb-41c1-45b8-8001-25c2053771fa",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$EWQSc8j4Sy7mqNdGVYCIru$nIP5bsz0Mttrt3MoRvpXdRv8r3bjwKmNFlLzF2f4BKM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "ana_fullstack",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-11-06T20:24:51.871Z",
+      "email": "ana@example.com",
+      "name": "Ana Martínez",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": "Full Stack Developer con 3 años de experiencia",
+      "education": null,
+      "location": "Valencia",
+      "skills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "MongoDB",
+        "AWS"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-11-06T20:24:51.871Z",
+      "updated_at": "2025-11-06T20:24:52.003Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "870b7174-b2f4-4f99-be43-185b9807a5d6",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$29GJSA0plmdRPqIYfZkwyl$vjgvmeBGnGiWoH1Fo06YjyIw3tv0/C7jKbdy8bqaqlQ=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "carlos_data",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-11-06T20:24:51.730Z",
+      "email": "carlos@example.com",
+      "name": "Carlos Rodríguez",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": "Data Scientist con 4 años de experiencia",
+      "education": null,
+      "location": "Barcelona",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "TensorFlow",
+        "Data Science",
+        "SQL"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-11-06T20:24:51.730Z",
+      "updated_at": "2025-11-06T20:24:51.864Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "f7660bc0-a5cb-4a37-8c33-cd5c0644bbc0",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$pYexO8YJDzMJuo2cMtRxPs$dszEAVjemhGEkKoRn0xKpHAj1O5JgXVVy4ZvXpTFeSc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "maria_dev",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-11-06T20:24:51.579Z",
+      "email": "maria@example.com",
+      "name": "María García",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": "Senior Developer con 5 años de experiencia",
+      "education": null,
+      "location": "Madrid",
+      "skills": [
+        "Python",
+        "Django",
+        "React",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-11-06T20:24:51.579Z",
+      "updated_at": "2025-11-06T20:24:51.713Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$mwbptrJEbkF7OgX3qwx3co$+uQBJ3MSq+KuXoi/tc6EgzzE+6sD3OkmJn0jx6bAGOY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "test1",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:21:32.507Z",
+      "email": "test@test.com",
+      "name": "test",
+      "phone": "",
+      "profile_image": "",
+      "resume": "",
+      "age": 20,
+      "experience": "Junior Developer con 1 año de experiencia en desarrollo web",
+      "education": "EAFIT",
+      "location": "Madrid",
+      "skills": [
+        "Python",
+        "Django",
+        "React",
+        "JavaScript",
+        "Node.js",
+        "Kubernetes",
+        "Docker",
+        "AWS",
+        "Machine Learning",
+        "Android"
+      ],
+      "is_active": true,
+      "email_verified": false,
+      "points": 110,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:21:32.635Z",
+      "updated_at": "2025-11-06T20:56:40.188Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "a7788e04-5b6b-4097-ab6c-f4ab18def9cf",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$JaRbiHgBazNInDKq0eHMws$UmtbAWQSrO4LVavgc8IhPw/p47MrQTSfThXcn7KYKsc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "test",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:14:58.174Z",
+      "email": "test@joby.com",
+      "name": "test",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:14:58.304Z",
+      "updated_at": "2025-10-31T18:14:58.304Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "53ef8bde-19ff-4a23-8506-75141c852dc1",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$CURXX8GUNoEeK45x5xY8TW$F43XrmJk+nCUix5mxiyFELk1Pez3LQuMtEiw9ckMKcg=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "usuario3",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:08:24.800Z",
+      "email": "usuario3@test.com",
+      "name": "cristian",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:08:24.938Z",
+      "updated_at": "2025-10-31T18:08:24.938Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "3bf29359-fdfb-4949-b3f8-c51f15ed9207",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ExnloYouGrtHqTRogVqhom$Fj2oRdD+gUhJ6nRm52YIcXuBhHegiMUUud2lHYYEXsc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "usuario2",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:07:12.385Z",
+      "email": "usuario2@test.com",
+      "name": "cristian",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:07:12.536Z",
+      "updated_at": "2025-10-31T18:07:12.536Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "0879014a-e686-433e-8216-ccd4ac61df1e",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$CED30gK0vlEUfebODIUPnl$IujgOPU6fzkyyb5T4zKlWDwPp3S0a3PEz1IKczxcWCk=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "cristian1",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:06:39.789Z",
+      "email": "cristian@test.com",
+      "name": "cristian",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:06:39.919Z",
+      "updated_at": "2025-10-31T18:06:39.919Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "77ca078f-7101-429a-93d4-19d831b670ff",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$cBDMEjYA6Ccj0aortFRUkd$iX/2LOXZO7Q+j9uzaT5AfOY6jKWBBRm9UP1yj5TqNLU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "cristian",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "date_joined": "2025-10-31T18:05:09.971Z",
+      "email": "cristian@joby.com",
+      "name": "cristian",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T18:05:10.100Z",
+      "updated_at": "2025-10-31T18:05:10.100Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+    "fields": {
+      "password": "pbkdf2_sha256$600000$v3VI6Dj4M6AXwI99BO2fkg$aIptJLp51QX/pWLZ2G0i09rnEfDoobsa4om8VQ90HrI=",
+      "last_login": "2025-10-31T17:10:23.511Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "date_joined": "2025-10-31T17:07:55.618Z",
+      "email": "admin@joby.com",
+      "name": "Admin User",
+      "phone": null,
+      "profile_image": "",
+      "resume": "",
+      "age": null,
+      "experience": null,
+      "education": null,
+      "location": null,
+      "skills": [],
+      "is_active": true,
+      "email_verified": false,
+      "points": 0,
+      "fcm_token": null,
+      "created_at": "2025-10-31T17:07:55.756Z",
+      "updated_at": "2025-10-31T17:07:55.756Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "ef809aa8-d46b-4467-ba99-c346d063c8df",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.732Z",
+      "created_at": "2025-11-06T19:46:38.797Z",
+      "updated_at": "2025-11-06T19:46:38.797Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "9ca9f225-925e-4e3b-8c2b-8e4123ba54ba",
+    "fields": {
+      "user": "a7788e04-5b6b-4097-ab6c-f4ab18def9cf",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.590Z",
+      "updated_at": "2025-11-06T19:47:39.590Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "0b9a4fd6-e203-4dfc-a317-e0b91533a0d1",
+    "fields": {
+      "user": "53ef8bde-19ff-4a23-8506-75141c852dc1",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.595Z",
+      "updated_at": "2025-11-06T19:47:39.595Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "bc737fb7-75ba-4cef-a268-22407443a153",
+    "fields": {
+      "user": "3bf29359-fdfb-4949-b3f8-c51f15ed9207",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.598Z",
+      "updated_at": "2025-11-06T19:47:39.598Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "60c5a5a3-b948-4ac5-8b2d-56fe781d47c7",
+    "fields": {
+      "user": "0879014a-e686-433e-8216-ccd4ac61df1e",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.601Z",
+      "updated_at": "2025-11-06T19:47:39.601Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "ac35d263-161b-47f3-b525-c59944971e5f",
+    "fields": {
+      "user": "77ca078f-7101-429a-93d4-19d831b670ff",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.605Z",
+      "updated_at": "2025-11-06T19:47:39.605Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "9bacf917-7c69-42ba-9764-49204885c946",
+    "fields": {
+      "user": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": null,
+      "created_at": "2025-11-06T19:47:39.607Z",
+      "updated_at": "2025-11-06T19:47:39.607Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "0e979e97-363c-4e33-a133-f29941249c7c",
+    "fields": {
+      "user": "f7660bc0-a5cb-4a37-8c33-cd5c0644bbc0",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.726Z",
+      "created_at": "2025-11-06T20:24:51.581Z",
+      "updated_at": "2025-11-06T20:24:51.581Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "1b54a209-618e-4732-853f-5f04d2ac1d19",
+    "fields": {
+      "user": "870b7174-b2f4-4f99-be43-185b9807a5d6",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.721Z",
+      "created_at": "2025-11-06T20:24:51.732Z",
+      "updated_at": "2025-11-06T20:24:51.732Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "a0e4eeb9-7dde-44a8-9e74-f3540997ba1f",
+    "fields": {
+      "user": "56ec4cdb-41c1-45b8-8001-25c2053771fa",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.716Z",
+      "created_at": "2025-11-06T20:24:51.872Z",
+      "updated_at": "2025-11-06T20:24:51.872Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "52def9ab-885b-4da6-b8c1-b26bfb5aed62",
+    "fields": {
+      "user": "6cfc4b0b-957e-41d2-95b3-9707eb03ae59",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.711Z",
+      "created_at": "2025-11-06T20:24:52.009Z",
+      "updated_at": "2025-11-06T20:24:52.009Z"
+    }
+  },
+  {
+    "model": "users.jobalertpreference",
+    "pk": "80501c3f-16e2-46c8-9b7e-2ba735c682ab",
+    "fields": {
+      "user": "211671a0-5bfa-400e-a972-10736895a38a",
+      "is_enabled": true,
+      "frequency": "instant",
+      "match_by_skills": true,
+      "match_by_location": true,
+      "match_by_experience": true,
+      "preferred_job_types": [],
+      "preferred_locations": [],
+      "remote_only": false,
+      "min_salary": null,
+      "last_alert_sent": "2025-11-06T20:49:59.704Z",
+      "created_at": "2025-11-06T20:24:52.145Z",
+      "updated_at": "2025-11-06T20:24:52.145Z"
+    }
+  },
+  {
+    "model": "users.company",
+    "pk": "f52eb017-1699-4a5d-8a65-faaad97abce3",
+    "fields": {
+      "name": "Coursera",
+      "logo_url": "https://d3njjcbhbojbot.cloudfront.net/web/images/favicons/icon-blue-72x72.png",
+      "website": "https://www.coursera.org",
+      "description": "Plataforma global de aprendizaje online",
+      "is_active": true,
+      "created_at": "2025-11-06T20:14:34.814Z",
+      "updated_at": "2025-11-06T20:14:34.814Z"
+    }
+  },
+  {
+    "model": "users.company",
+    "pk": "91673b35-9a73-4897-9149-e3d69cd4a9b8",
+    "fields": {
+      "name": "Google",
+      "logo_url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      "website": "https://careers.google.com",
+      "description": "Líder mundial en tecnología, especializado en servicios de internet",
+      "is_active": true,
+      "created_at": "2025-11-06T20:14:34.806Z",
+      "updated_at": "2025-11-06T20:14:34.806Z"
+    }
+  },
+  {
+    "model": "users.company",
+    "pk": "18ed6c98-1368-43c4-bfec-0f854a9ce98e",
+    "fields": {
+      "name": "Microsoft",
+      "logo_url": "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b",
+      "website": "https://careers.microsoft.com",
+      "description": "Gigante tecnológico líder en software y servicios cloud",
+      "is_active": true,
+      "created_at": "2025-11-06T20:14:34.809Z",
+      "updated_at": "2025-11-06T20:14:34.809Z"
+    }
+  },
+  {
+    "model": "users.company",
+    "pk": "7c2b443c-5905-4512-aee6-a103d1ffdec4",
+    "fields": {
+      "name": "Platzi",
+      "logo_url": "https://static.platzi.com/media/platzi-isotipo@2x.png",
+      "website": "https://platzi.com",
+      "description": "Plataforma de educación online en español",
+      "is_active": true,
+      "created_at": "2025-11-06T20:14:34.812Z",
+      "updated_at": "2025-11-06T20:14:34.812Z"
+    }
+  },
+  {
+    "model": "users.company",
+    "pk": "230c99ac-38a6-49bf-b20d-29d202ee6a85",
+    "fields": {
+      "name": "Udemy",
+      "logo_url": "https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg",
+      "website": "https://www.udemy.com",
+      "description": "Plataforma de cursos online para profesionales",
+      "is_active": true,
+      "created_at": "2025-11-06T20:14:34.817Z",
+      "updated_at": "2025-11-06T20:14:34.817Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "650d5a57-a1bb-4660-8052-275c9e350303",
+    "fields": {
+      "title": "Curso de Python desde Cero",
+      "description": "Aprende Python desde cero hasta nivel intermedio con proyectos prácticos",
+      "company": "7c2b443c-5905-4512-aee6-a103d1ffdec4",
+      "required_skills": [],
+      "skills_taught": [
+        "Python",
+        "Programming",
+        "Data Structures",
+        "OOP"
+      ],
+      "level": "beginner",
+      "duration_value": 20,
+      "duration_unit": "hours",
+      "course_url": "https://platzi.com/cursos/python",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "29.99",
+      "currency": "USD",
+      "rating": "4.90",
+      "enrollments": 45600,
+      "is_active": true,
+      "priority": 100,
+      "created_at": "2025-11-06T20:14:34.830Z",
+      "updated_at": "2025-11-06T20:14:34.830Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "e81dc5b8-f7d0-4a0d-b1e6-3f8384eace33",
+    "fields": {
+      "title": "Data Structures and Algorithms",
+      "description": "Estructuras de datos y algoritmos para entrevistas técnicas",
+      "company": "f52eb017-1699-4a5d-8a65-faaad97abce3",
+      "required_skills": [
+        "Python"
+      ],
+      "skills_taught": [
+        "Algorithms",
+        "Data Structures",
+        "Problem Solving",
+        "Technical Interviews"
+      ],
+      "level": "intermediate",
+      "duration_value": 45,
+      "duration_unit": "hours",
+      "course_url": "https://www.coursera.org/learn/data-structures-algorithms",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "59.99",
+      "currency": "USD",
+      "rating": "4.80",
+      "enrollments": 42500,
+      "is_active": true,
+      "priority": 95,
+      "created_at": "2025-11-06T20:14:34.841Z",
+      "updated_at": "2025-11-06T20:14:34.841Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "c3751dab-01aa-4270-9785-a33c3adf927b",
+    "fields": {
+      "title": "Azure Fundamentals",
+      "description": "Fundamentos de Microsoft Azure para desarrolladores y administradores de sistemas",
+      "company": "18ed6c98-1368-43c4-bfec-0f854a9ce98e",
+      "required_skills": [
+        "Cloud basics"
+      ],
+      "skills_taught": [
+        "Azure",
+        "Cloud Computing",
+        "DevOps",
+        "CI/CD"
+      ],
+      "level": "beginner",
+      "duration_value": 30,
+      "duration_unit": "hours",
+      "course_url": "https://learn.microsoft.com/azure",
+      "thumbnail_url": null,
+      "is_free": true,
+      "price": null,
+      "currency": "USD",
+      "rating": "4.60",
+      "enrollments": 28500,
+      "is_active": true,
+      "priority": 95,
+      "created_at": "2025-11-06T20:14:34.825Z",
+      "updated_at": "2025-11-06T20:14:34.825Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "a9687032-017f-45be-90b3-4047e30ca163",
+    "fields": {
+      "title": "React.js: De Cero a Experto",
+      "description": "Domina React.js con Hooks, Context API y React Router",
+      "company": "7c2b443c-5905-4512-aee6-a103d1ffdec4",
+      "required_skills": [
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ],
+      "skills_taught": [
+        "React",
+        "React Hooks",
+        "Redux",
+        "React Router"
+      ],
+      "level": "intermediate",
+      "duration_value": 35,
+      "duration_unit": "hours",
+      "course_url": "https://platzi.com/cursos/react",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "39.99",
+      "currency": "USD",
+      "rating": "4.80",
+      "enrollments": 38200,
+      "is_active": true,
+      "priority": 90,
+      "created_at": "2025-11-06T20:14:34.832Z",
+      "updated_at": "2025-11-06T20:14:34.832Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "5bc76929-d4d1-46e3-b0c9-2be1871021c5",
+    "fields": {
+      "title": "The Complete JavaScript Course",
+      "description": "JavaScript moderno desde cero: ES6+, Async/Await, APIs y más",
+      "company": "230c99ac-38a6-49bf-b20d-29d202ee6a85",
+      "required_skills": [],
+      "skills_taught": [
+        "JavaScript",
+        "ES6+",
+        "Async Programming",
+        "Web APIs"
+      ],
+      "level": "beginner",
+      "duration_value": 45,
+      "duration_unit": "hours",
+      "course_url": "https://www.udemy.com/course/javascript-complete",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "19.99",
+      "currency": "USD",
+      "rating": "4.70",
+      "enrollments": 52300,
+      "is_active": true,
+      "priority": 90,
+      "created_at": "2025-11-06T20:14:34.844Z",
+      "updated_at": "2025-11-06T20:14:34.844Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "b1b8b816-82d3-42fe-b7f4-cc85ec2846f0",
+    "fields": {
+      "title": "Google Cloud Platform Fundamentals",
+      "description": "Aprende los fundamentos de Google Cloud Platform, incluyendo Compute Engine, Storage y Networking",
+      "company": "91673b35-9a73-4897-9149-e3d69cd4a9b8",
+      "required_skills": [
+        "Python",
+        "Linux"
+      ],
+      "skills_taught": [
+        "GCP",
+        "Cloud Computing",
+        "Kubernetes",
+        "Docker"
+      ],
+      "level": "intermediate",
+      "duration_value": 40,
+      "duration_unit": "hours",
+      "course_url": "https://cloud.google.com/training",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "49.99",
+      "currency": "USD",
+      "rating": "4.70",
+      "enrollments": 15420,
+      "is_active": true,
+      "priority": 90,
+      "created_at": "2025-11-06T20:14:34.820Z",
+      "updated_at": "2025-11-06T20:14:34.820Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "33f6610b-5898-41bc-8825-6819db5dba0e",
+    "fields": {
+      "title": "Android Development with Kotlin",
+      "description": "Curso completo de desarrollo Android usando Kotlin y Jetpack Compose",
+      "company": "91673b35-9a73-4897-9149-e3d69cd4a9b8",
+      "required_skills": [
+        "Java"
+      ],
+      "skills_taught": [
+        "Kotlin",
+        "Android",
+        "Mobile Development",
+        "Jetpack Compose"
+      ],
+      "level": "intermediate",
+      "duration_value": 60,
+      "duration_unit": "hours",
+      "course_url": "https://developer.android.com/courses",
+      "thumbnail_url": null,
+      "is_free": true,
+      "price": null,
+      "currency": "USD",
+      "rating": "4.80",
+      "enrollments": 32100,
+      "is_active": true,
+      "priority": 85,
+      "created_at": "2025-11-06T20:14:34.822Z",
+      "updated_at": "2025-11-06T20:14:34.822Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "3e6280ba-8d8f-4589-8467-43b709b174b7",
+    "fields": {
+      "title": "Docker y Kubernetes: Guía Práctica",
+      "description": "Aprende Docker y Kubernetes desde cero con proyectos reales",
+      "company": "230c99ac-38a6-49bf-b20d-29d202ee6a85",
+      "required_skills": [
+        "Linux",
+        "Basic networking"
+      ],
+      "skills_taught": [
+        "Docker",
+        "Kubernetes",
+        "Containers",
+        "Microservices",
+        "DevOps"
+      ],
+      "level": "intermediate",
+      "duration_value": 35,
+      "duration_unit": "hours",
+      "course_url": "https://www.udemy.com/course/docker-kubernetes",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "24.99",
+      "currency": "USD",
+      "rating": "4.80",
+      "enrollments": 27800,
+      "is_active": true,
+      "priority": 85,
+      "created_at": "2025-11-06T20:14:34.846Z",
+      "updated_at": "2025-11-06T20:14:34.846Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "304c267f-a1d4-4dde-bb2b-d2a17fb980a2",
+    "fields": {
+      "title": "Introducción a Machine Learning",
+      "description": "Fundamentos de Machine Learning con Python y scikit-learn",
+      "company": "7c2b443c-5905-4512-aee6-a103d1ffdec4",
+      "required_skills": [
+        "Python",
+        "Mathematics"
+      ],
+      "skills_taught": [
+        "Machine Learning",
+        "scikit-learn",
+        "Data Science",
+        "AI"
+      ],
+      "level": "intermediate",
+      "duration_value": 40,
+      "duration_unit": "hours",
+      "course_url": "https://platzi.com/cursos/machine-learning",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "49.99",
+      "currency": "USD",
+      "rating": "4.70",
+      "enrollments": 22400,
+      "is_active": true,
+      "priority": 85,
+      "created_at": "2025-11-06T20:14:34.835Z",
+      "updated_at": "2025-11-06T20:14:34.835Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "004587cf-7789-499c-950c-7d65d4e0c541",
+    "fields": {
+      "title": ".NET Core Development",
+      "description": "Desarrollo de aplicaciones web modernas con .NET Core y C#",
+      "company": "18ed6c98-1368-43c4-bfec-0f854a9ce98e",
+      "required_skills": [
+        "C#",
+        "OOP"
+      ],
+      "skills_taught": [
+        ".NET Core",
+        "ASP.NET",
+        "Entity Framework",
+        "Web APIs"
+      ],
+      "level": "intermediate",
+      "duration_value": 50,
+      "duration_unit": "hours",
+      "course_url": "https://learn.microsoft.com/dotnet",
+      "thumbnail_url": null,
+      "is_free": true,
+      "price": null,
+      "currency": "USD",
+      "rating": "4.70",
+      "enrollments": 19800,
+      "is_active": true,
+      "priority": 80,
+      "created_at": "2025-11-06T20:14:34.828Z",
+      "updated_at": "2025-11-06T20:14:34.828Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "6ccd2d61-8711-4362-80a8-ebc417a32652",
+    "fields": {
+      "title": "Full Stack Web Development",
+      "description": "Curso completo de desarrollo web full stack con Node.js y React",
+      "company": "f52eb017-1699-4a5d-8a65-faaad97abce3",
+      "required_skills": [
+        "JavaScript",
+        "HTML"
+      ],
+      "skills_taught": [
+        "Node.js",
+        "Express",
+        "React",
+        "MongoDB",
+        "Full Stack"
+      ],
+      "level": "intermediate",
+      "duration_value": 80,
+      "duration_unit": "hours",
+      "course_url": "https://www.coursera.org/specializations/full-stack",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "79.99",
+      "currency": "USD",
+      "rating": "4.60",
+      "enrollments": 31200,
+      "is_active": true,
+      "priority": 80,
+      "created_at": "2025-11-06T20:14:34.838Z",
+      "updated_at": "2025-11-06T20:14:34.838Z"
+    }
+  },
+  {
+    "model": "users.course",
+    "pk": "2c58a573-2508-49f9-9e8f-0e896dc2d94d",
+    "fields": {
+      "title": "SQL para Data Science",
+      "description": "Domina SQL para análisis de datos y Business Intelligence",
+      "company": "230c99ac-38a6-49bf-b20d-29d202ee6a85",
+      "required_skills": [],
+      "skills_taught": [
+        "SQL",
+        "PostgreSQL",
+        "Data Analysis",
+        "Database Design"
+      ],
+      "level": "beginner",
+      "duration_value": 25,
+      "duration_unit": "hours",
+      "course_url": "https://www.udemy.com/course/sql-data-science",
+      "thumbnail_url": null,
+      "is_free": false,
+      "price": "19.99",
+      "currency": "USD",
+      "rating": "4.60",
+      "enrollments": 34500,
+      "is_active": true,
+      "priority": 75,
+      "created_at": "2025-11-06T20:14:34.849Z",
+      "updated_at": "2025-11-06T20:14:34.849Z"
+    }
+  },
+  {
+    "model": "users.successstory",
+    "pk": 4,
+    "fields": {
+      "user": "6cfc4b0b-957e-41d2-95b3-9707eb03ae59",
+      "company": "Meta",
+      "position": "Android Developer",
+      "hire_date": "2025-09-07",
+      "salary_range": "70k-100k",
+      "is_willing_to_mentor": true,
+      "max_mentees": 3,
+      "success_description": "Construí 5 apps completas y las publiqué en Play Store. Esto fue crucial para demostrar mis habilidades. También contribuí a bibliotecas de Android open source. El networking también ayudó mucho.",
+      "key_skills_used": [
+        "Kotlin",
+        "Android",
+        "Jetpack Compose",
+        "MVVM"
+      ],
+      "created_at": "2025-11-06T20:24:52.140Z",
+      "updated_at": "2025-11-06T20:24:52.140Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.successstory",
+    "pk": 3,
+    "fields": {
+      "user": "56ec4cdb-41c1-45b8-8001-25c2053771fa",
+      "company": "Amazon",
+      "position": "Full Stack Developer",
+      "hire_date": "2025-08-08",
+      "salary_range": "70k-100k",
+      "is_willing_to_mentor": true,
+      "max_mentees": 4,
+      "success_description": "Estudié todos los días durante 4 meses. Lo más importante fue tener proyectos full stack completos en mi GitHub. También practiqué mucho las preguntas de behavioral interviews. ¡Tú también puedes lograrlo!",
+      "key_skills_used": [
+        "React",
+        "Node.js",
+        "AWS",
+        "Microservices"
+      ],
+      "created_at": "2025-11-06T20:24:52.006Z",
+      "updated_at": "2025-11-06T20:24:52.006Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.successstory",
+    "pk": 2,
+    "fields": {
+      "user": "870b7174-b2f4-4f99-be43-185b9807a5d6",
+      "company": "Microsoft",
+      "position": "Data Scientist",
+      "hire_date": "2025-07-09",
+      "salary_range": "70k-100k",
+      "is_willing_to_mentor": true,
+      "max_mentees": 2,
+      "success_description": "Mi consejo: construye un portafolio sólido con proyectos de ML reales. Participa en Kaggle y contribuye a proyectos open source. La persistencia es clave, apliqué a más de 50 posiciones antes de conseguir esta.",
+      "key_skills_used": [
+        "Machine Learning",
+        "Python",
+        "TensorFlow",
+        "Statistics"
+      ],
+      "created_at": "2025-11-06T20:24:51.868Z",
+      "updated_at": "2025-11-06T20:24:51.868Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.successstory",
+    "pk": 5,
+    "fields": {
+      "user": "211671a0-5bfa-400e-a972-10736895a38a",
+      "company": "Netflix",
+      "position": "Cloud Engineer",
+      "hire_date": "2025-06-09",
+      "salary_range": "100k+",
+      "is_willing_to_mentor": true,
+      "max_mentees": 2,
+      "success_description": "Obtuve certificaciones de Azure y AWS. Monté un laboratorio personal en la nube donde experimenté con Kubernetes y CI/CD. Documenté todo en un blog técnico que me ayudó mucho en las entrevistas.",
+      "key_skills_used": [
+        "Azure",
+        "Kubernetes",
+        "Terraform",
+        "DevOps"
+      ],
+      "created_at": "2025-11-06T20:24:52.278Z",
+      "updated_at": "2025-11-06T20:24:52.278Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.successstory",
+    "pk": 1,
+    "fields": {
+      "user": "f7660bc0-a5cb-4a37-8c33-cd5c0644bbc0",
+      "company": "Google",
+      "position": "Senior Software Engineer",
+      "hire_date": "2025-05-10",
+      "salary_range": "100k+",
+      "is_willing_to_mentor": true,
+      "max_mentees": 3,
+      "success_description": "Conseguí el trabajo después de 6 meses de preparación intensiva. Lo clave fue practicar algoritmos todos los días y hacer proyectos de código abierto. Las entrevistas fueron difíciles pero la preparación valió la pena. ¡No te rindas!",
+      "key_skills_used": [
+        "Python",
+        "Django",
+        "Algorithms",
+        "System Design"
+      ],
+      "created_at": "2025-11-06T20:24:51.726Z",
+      "updated_at": "2025-11-06T20:24:51.726Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "users.profilematch",
+    "pk": 5,
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "matched_user": "f7660bc0-a5cb-4a37-8c33-cd5c0644bbc0",
+      "similarity_score": 21,
+      "matching_skills": [
+        "react",
+        "postgresql",
+        "django",
+        "docker",
+        "python"
+      ],
+      "skill_overlap_percentage": 41.67,
+      "same_location": false,
+      "similar_experience_level": false,
+      "calculated_at": "2025-11-06T20:27:47.854Z"
+    }
+  },
+  {
+    "model": "users.profilematch",
+    "pk": 3,
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "matched_user": "56ec4cdb-41c1-45b8-8001-25c2053771fa",
+      "similarity_score": 7,
+      "matching_skills": [
+        "react",
+        "javascript"
+      ],
+      "skill_overlap_percentage": 16.67,
+      "same_location": false,
+      "similar_experience_level": false,
+      "calculated_at": "2025-11-06T20:27:47.843Z"
+    }
+  },
+  {
+    "model": "users.profilematch",
+    "pk": 1,
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "matched_user": "211671a0-5bfa-400e-a972-10736895a38a",
+      "similarity_score": 3,
+      "matching_skills": [
+        "docker"
+      ],
+      "skill_overlap_percentage": 8.33,
+      "same_location": false,
+      "similar_experience_level": false,
+      "calculated_at": "2025-11-06T20:27:47.833Z"
+    }
+  },
+  {
+    "model": "users.profilematch",
+    "pk": 2,
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "matched_user": "6cfc4b0b-957e-41d2-95b3-9707eb03ae59",
+      "similarity_score": 3,
+      "matching_skills": [
+        "firebase"
+      ],
+      "skill_overlap_percentage": 8.33,
+      "same_location": false,
+      "similar_experience_level": false,
+      "calculated_at": "2025-11-06T20:27:47.838Z"
+    }
+  },
+  {
+    "model": "users.profilematch",
+    "pk": 4,
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "matched_user": "870b7174-b2f4-4f99-be43-185b9807a5d6",
+      "similarity_score": 3,
+      "matching_skills": [
+        "python"
+      ],
+      "skill_overlap_percentage": 8.33,
+      "same_location": false,
+      "similar_experience_level": false,
+      "calculated_at": "2025-11-06T20:27:47.849Z"
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": "a52da1d1-cf6b-4192-b5fa-53fd0a91584d",
+    "fields": {
+      "title": "Mobile Developer Flutter",
+      "company_name": "App Masters",
+      "company_logo": "",
+      "location": "Remoto, LATAM",
+      "remote_ok": true,
+      "job_type": "contract",
+      "experience_level": "mid",
+      "description": "Desarrollador Flutter para aplicaciones móviles.",
+      "requirements": [],
+      "responsibilities": [],
+      "benefits": [],
+      "skills_required": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "Git",
+        "REST APIs"
+      ],
+      "salary_min": "55000.00",
+      "salary_max": "85000.00",
+      "salary_currency": "USD",
+      "application_url": null,
+      "application_email": null,
+      "posted_by": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "posted_at": "2025-11-06T19:46:38.794Z",
+      "updated_at": "2025-11-06T19:46:38.794Z",
+      "expires_at": null,
+      "is_active": true,
+      "views_count": 0,
+      "slug": "mobile-developer-flutter-app-masters-a52da1d1"
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": "0e6f019c-e7d4-4151-956a-5d151632199e",
+    "fields": {
+      "title": "Data Scientist",
+      "company_name": "Analytics Co",
+      "company_logo": "",
+      "location": "Monterrey, México",
+      "remote_ok": false,
+      "job_type": "full_time",
+      "experience_level": "senior",
+      "description": "Científico de datos para análisis avanzados.",
+      "requirements": [],
+      "responsibilities": [],
+      "benefits": [],
+      "skills_required": [
+        "Python",
+        "Machine Learning",
+        "TensorFlow",
+        "Pandas",
+        "SQL"
+      ],
+      "salary_min": "90000.00",
+      "salary_max": "130000.00",
+      "salary_currency": "USD",
+      "application_url": null,
+      "application_email": null,
+      "posted_by": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "posted_at": "2025-11-06T19:46:38.793Z",
+      "updated_at": "2025-11-06T19:46:38.793Z",
+      "expires_at": null,
+      "is_active": true,
+      "views_count": 0,
+      "slug": "data-scientist-analytics-co-0e6f019c"
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": "fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+    "fields": {
+      "title": "Full Stack Developer",
+      "company_name": "Digital Agency",
+      "company_logo": "",
+      "location": "Remoto, México",
+      "remote_ok": true,
+      "job_type": "full_time",
+      "experience_level": "mid",
+      "description": "Desarrollador full stack para proyectos diversos.",
+      "requirements": [],
+      "responsibilities": [],
+      "benefits": [],
+      "skills_required": [
+        "JavaScript",
+        "Node.js",
+        "React",
+        "MongoDB",
+        "Express"
+      ],
+      "salary_min": "60000.00",
+      "salary_max": "90000.00",
+      "salary_currency": "USD",
+      "application_url": null,
+      "application_email": null,
+      "posted_by": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "posted_at": "2025-11-06T19:46:38.788Z",
+      "updated_at": "2025-11-06T19:46:38.788Z",
+      "expires_at": null,
+      "is_active": true,
+      "views_count": 0,
+      "slug": "full-stack-developer-digital-agency-fb5ce6f8"
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": "c2023d5b-8e82-424f-aa3a-b703de92c83c",
+    "fields": {
+      "title": "Frontend Developer React",
+      "company_name": "Startup Innovadora",
+      "company_logo": "",
+      "location": "Guadalajara, México",
+      "remote_ok": true,
+      "job_type": "full_time",
+      "experience_level": "mid",
+      "description": "Únete a nuestro equipo para crear interfaces increíbles.",
+      "requirements": [],
+      "responsibilities": [],
+      "benefits": [],
+      "skills_required": [
+        "React",
+        "JavaScript",
+        "TypeScript",
+        "CSS",
+        "Git"
+      ],
+      "salary_min": "50000.00",
+      "salary_max": "75000.00",
+      "salary_currency": "USD",
+      "application_url": null,
+      "application_email": null,
+      "posted_by": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "posted_at": "2025-11-06T19:46:38.787Z",
+      "updated_at": "2025-11-06T19:46:38.787Z",
+      "expires_at": null,
+      "is_active": true,
+      "views_count": 0,
+      "slug": "frontend-developer-react-startup-innovadora-c2023d5b"
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+    "fields": {
+      "title": "Desarrollador Python Senior",
+      "company_name": "TechCorp",
+      "company_logo": "",
+      "location": "Ciudad de México, México",
+      "remote_ok": true,
+      "job_type": "full_time",
+      "experience_level": "senior",
+      "description": "Buscamos un desarrollador Python experimentado para unirse a nuestro equipo.",
+      "requirements": [],
+      "responsibilities": [],
+      "benefits": [],
+      "skills_required": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker",
+        "AWS"
+      ],
+      "salary_min": "80000.00",
+      "salary_max": "120000.00",
+      "salary_currency": "USD",
+      "application_url": null,
+      "application_email": null,
+      "posted_by": "1ffff336-e3d1-4a82-92d1-c18801c7e029",
+      "posted_at": "2025-11-06T19:46:38.784Z",
+      "updated_at": "2025-11-06T19:46:38.784Z",
+      "expires_at": null,
+      "is_active": true,
+      "views_count": 0,
+      "slug": "desarrollador-python-senior-techcorp-0afdae3a"
+    }
+  },
+  {
+    "model": "streaks.streak",
+    "pk": "df24e833-965c-476d-bcdc-037d79921723",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "current_streak": 1,
+      "longest_streak": 1,
+      "last_activity_date": "2025-11-06",
+      "total_logins": 15,
+      "total_applications": 0,
+      "total_profile_updates": 0,
+      "total_jobs_saved": 0,
+      "total_jobs_viewed": 0,
+      "created_at": "2025-10-31T18:21:34.808Z",
+      "updated_at": "2025-11-06T20:58:51.592Z"
+    }
+  },
+  {
+    "model": "streaks.streak",
+    "pk": "d08a8c40-ed87-485f-98ca-09db1422850d",
+    "fields": {
+      "user": "53ef8bde-19ff-4a23-8506-75141c852dc1",
+      "current_streak": 0,
+      "longest_streak": 0,
+      "last_activity_date": null,
+      "total_logins": 0,
+      "total_applications": 0,
+      "total_profile_updates": 0,
+      "total_jobs_saved": 0,
+      "total_jobs_viewed": 0,
+      "created_at": "2025-10-31T18:08:29.277Z",
+      "updated_at": "2025-10-31T18:08:29.277Z"
+    }
+  },
+  {
+    "model": "streaks.streak",
+    "pk": "23f6534f-0bac-4f83-8fdd-06b45f06188f",
+    "fields": {
+      "user": "a7788e04-5b6b-4097-ab6c-f4ab18def9cf",
+      "current_streak": 0,
+      "longest_streak": 0,
+      "last_activity_date": null,
+      "total_logins": 0,
+      "total_applications": 0,
+      "total_profile_updates": 0,
+      "total_jobs_saved": 0,
+      "total_jobs_viewed": 0,
+      "created_at": "2025-10-31T18:15:03.625Z",
+      "updated_at": "2025-10-31T18:15:03.625Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "8add5127-5756-4df9-84b7-fc4179bd9d46",
+    "fields": {
+      "name": "First Step",
+      "description": "Submit your first application",
+      "achievement_type": "applications",
+      "icon": "????",
+      "points_reward": 20,
+      "requirement_type": "total_applications",
+      "requirement_value": 1,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.504Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "359cabba-aca7-4a2b-b09b-a83280eaef9f",
+    "fields": {
+      "name": "Go Getter",
+      "description": "Submit 10 applications",
+      "achievement_type": "applications",
+      "icon": "????",
+      "points_reward": 100,
+      "requirement_type": "total_applications",
+      "requirement_value": 10,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.507Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "6bab908e-f418-427a-82bb-b67435369988",
+    "fields": {
+      "name": "Job Hunter",
+      "description": "Submit 25 applications",
+      "achievement_type": "applications",
+      "icon": "????",
+      "points_reward": 250,
+      "requirement_type": "total_applications",
+      "requirement_value": 25,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.509Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "1659d03b-0b21-45a1-9cac-6794b467dc7e",
+    "fields": {
+      "name": "Application Master",
+      "description": "Submit 50 applications",
+      "achievement_type": "applications",
+      "icon": "????",
+      "points_reward": 500,
+      "requirement_type": "total_applications",
+      "requirement_value": 50,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.512Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "2bdb2228-510c-4e4c-a6d4-3151007b347a",
+    "fields": {
+      "name": "Points Pioneer",
+      "description": "Earn 100 points",
+      "achievement_type": "milestone",
+      "icon": "???",
+      "points_reward": 25,
+      "requirement_type": "total_points",
+      "requirement_value": 100,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.516Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "47f934e8-4d36-42bf-9e9a-ca875b42ed94",
+    "fields": {
+      "name": "Points Pro",
+      "description": "Earn 500 points",
+      "achievement_type": "milestone",
+      "icon": "????",
+      "points_reward": 100,
+      "requirement_type": "total_points",
+      "requirement_value": 500,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.519Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "7bd586c7-99ab-4952-9f6f-569b461e3075",
+    "fields": {
+      "name": "Points Champion",
+      "description": "Earn 1000 points",
+      "achievement_type": "milestone",
+      "icon": "????",
+      "points_reward": 200,
+      "requirement_type": "total_points",
+      "requirement_value": 1000,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.522Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "518350d7-2a04-4848-ab9b-4dac2ab8ef32",
+    "fields": {
+      "name": "Profile Complete",
+      "description": "Complete your profile 100%",
+      "achievement_type": "profile",
+      "icon": "???",
+      "points_reward": 50,
+      "requirement_type": "profile_completion",
+      "requirement_value": 100,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.515Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "8b24c228-69f3-4083-b292-946ce5b63ea3",
+    "fields": {
+      "name": "Getting Started",
+      "description": "Complete your first day on Joby",
+      "achievement_type": "streak",
+      "icon": "????",
+      "points_reward": 10,
+      "requirement_type": "streak_days",
+      "requirement_value": 1,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.494Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "e1607a5c-55aa-4467-841b-0c989d165b77",
+    "fields": {
+      "name": "On a Roll",
+      "description": "Maintain a 7-day streak",
+      "achievement_type": "streak",
+      "icon": "????",
+      "points_reward": 50,
+      "requirement_type": "streak_days",
+      "requirement_value": 7,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.498Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "fe5eaa45-41d6-49fe-ad18-433fe24cc2eb",
+    "fields": {
+      "name": "Unstoppable",
+      "description": "Maintain a 30-day streak",
+      "achievement_type": "streak",
+      "icon": "????",
+      "points_reward": 200,
+      "requirement_type": "streak_days",
+      "requirement_value": 30,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.500Z"
+    }
+  },
+  {
+    "model": "streaks.achievement",
+    "pk": "8d0c2616-31c9-4130-b72d-acf0896da36b",
+    "fields": {
+      "name": "Legend",
+      "description": "Maintain a 100-day streak",
+      "achievement_type": "streak",
+      "icon": "????",
+      "points_reward": 1000,
+      "requirement_type": "streak_days",
+      "requirement_value": 100,
+      "is_active": true,
+      "created_at": "2025-10-31T17:20:26.503Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "2c5ade4f-323c-4fe7-a57f-b6f7e31608e8",
+    "fields": {
+      "title": "Bienvenido a JOBY",
+      "description": "Completa tu primer día en la plataforma",
+      "icon": "🎉",
+      "challenge_type": "special",
+      "category": "exploration",
+      "target_action": "first_login",
+      "target_count": 1,
+      "points_reward": 30,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 110,
+      "created_at": "2025-11-06T20:56:04.478Z",
+      "updated_at": "2025-11-06T20:56:04.478Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "941d64de-943a-4a7e-b750-63d80ffe9560",
+    "fields": {
+      "title": "Primera Aplicación del Día",
+      "description": "Aplica a tu primer trabajo del día y comienza con energía",
+      "icon": "🌅",
+      "challenge_type": "daily",
+      "category": "applications",
+      "target_action": "apply_to_jobs",
+      "target_count": 1,
+      "points_reward": 10,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 100,
+      "created_at": "2025-11-06T20:56:04.452Z",
+      "updated_at": "2025-11-06T20:56:04.452Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "b2873997-baba-43cc-b768-2cc516f2081f",
+    "fields": {
+      "title": "Racha del Día",
+      "description": "Mantén tu racha diaria activa",
+      "icon": "🔥",
+      "challenge_type": "daily",
+      "category": "streak",
+      "target_action": "maintain_streak",
+      "target_count": 1,
+      "points_reward": 25,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 95,
+      "created_at": "2025-11-06T20:56:04.463Z",
+      "updated_at": "2025-11-06T20:56:04.463Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "ad2761d8-57cd-45e6-bf03-02567f8f8c5c",
+    "fields": {
+      "title": "Aplicador Activo",
+      "description": "Aplica a 5 trabajos en un solo día",
+      "icon": "🎯",
+      "challenge_type": "daily",
+      "category": "applications",
+      "target_action": "apply_to_jobs",
+      "target_count": 5,
+      "points_reward": 50,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 90,
+      "created_at": "2025-11-06T20:56:04.455Z",
+      "updated_at": "2025-11-06T20:56:04.455Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "81ca2416-ecf9-41cb-a1b6-a160d8bb74ae",
+    "fields": {
+      "title": "Invita a un Amigo",
+      "description": "Refiere a tu primer amigo a JOBY",
+      "icon": "🎁",
+      "challenge_type": "special",
+      "category": "networking",
+      "target_action": "refer_friend",
+      "target_count": 1,
+      "points_reward": 50,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 88,
+      "created_at": "2025-11-06T20:56:04.482Z",
+      "updated_at": "2025-11-06T20:56:04.482Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "0075c72e-bd95-468a-b8f0-ff0ee4454fed",
+    "fields": {
+      "title": "Racha de Fuego",
+      "description": "Mantén una racha de 7 días consecutivos",
+      "icon": "🔥",
+      "challenge_type": "weekly",
+      "category": "streak",
+      "target_action": "maintain_streak",
+      "target_count": 7,
+      "points_reward": 200,
+      "bonus_multiplier": "1.50",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 85,
+      "created_at": "2025-11-06T20:56:04.475Z",
+      "updated_at": "2025-11-06T20:56:04.475Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "10e451d2-abcc-44e9-a3f8-9e64d7246e90",
+    "fields": {
+      "title": "Actualiza tu Perfil",
+      "description": "Mejora tu información de perfil para destacar",
+      "icon": "✏️",
+      "challenge_type": "daily",
+      "category": "profile",
+      "target_action": "update_profile",
+      "target_count": 1,
+      "points_reward": 20,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 85,
+      "created_at": "2025-11-06T20:56:04.458Z",
+      "updated_at": "2025-11-06T20:56:04.458Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "5178a388-5a22-4607-bd25-583d61d49e7e",
+    "fields": {
+      "title": "Explorador de Oportunidades",
+      "description": "Revisa al menos 10 ofertas de trabajo",
+      "icon": "🔍",
+      "challenge_type": "daily",
+      "category": "exploration",
+      "target_action": "view_jobs",
+      "target_count": 10,
+      "points_reward": 15,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 80,
+      "created_at": "2025-11-06T20:56:04.460Z",
+      "updated_at": "2025-11-06T20:56:04.460Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "23808199-acd6-4786-a03e-e269a5c14bda",
+    "fields": {
+      "title": "Perfil Completo",
+      "description": "Completa el 100% de tu perfil",
+      "icon": "⭐",
+      "challenge_type": "weekly",
+      "category": "profile",
+      "target_action": "complete_profile",
+      "target_count": 1,
+      "points_reward": 100,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 75,
+      "created_at": "2025-11-06T20:56:04.468Z",
+      "updated_at": "2025-11-06T20:56:04.468Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "cb695309-ee35-41a7-bb29-ff52dce48087",
+    "fields": {
+      "title": "Guerrero de la Semana",
+      "description": "Aplica a 20 trabajos durante la semana",
+      "icon": "⚔️",
+      "challenge_type": "weekly",
+      "category": "applications",
+      "target_action": "apply_to_jobs",
+      "target_count": 20,
+      "points_reward": 150,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 70,
+      "created_at": "2025-11-06T20:56:04.465Z",
+      "updated_at": "2025-11-06T20:56:04.465Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "32390e5d-95f2-4a4b-b694-cdefd6a83259",
+    "fields": {
+      "title": "Networking Pro",
+      "description": "Conéctate con 3 mentores esta semana",
+      "icon": "🤝",
+      "challenge_type": "weekly",
+      "category": "networking",
+      "target_action": "connect_mentors",
+      "target_count": 3,
+      "points_reward": 120,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 65,
+      "created_at": "2025-11-06T20:56:04.470Z",
+      "updated_at": "2025-11-06T20:56:04.470Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "71b2f2a4-1b82-4167-a2eb-ae95465ffa9b",
+    "fields": {
+      "title": "Estudiante Dedicado",
+      "description": "Inscríbete en 2 cursos recomendados",
+      "icon": "📚",
+      "challenge_type": "weekly",
+      "category": "learning",
+      "target_action": "enroll_courses",
+      "target_count": 2,
+      "points_reward": 80,
+      "bonus_multiplier": "1.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 60,
+      "created_at": "2025-11-06T20:56:04.472Z",
+      "updated_at": "2025-11-06T20:56:04.472Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "f587f266-bb18-4533-af53-323e29a0db4b",
+    "fields": {
+      "title": "Maratonista de Aplicaciones",
+      "description": "Aplica a 50 trabajos en total",
+      "icon": "🏃",
+      "challenge_type": "special",
+      "category": "applications",
+      "target_action": "apply_to_jobs",
+      "target_count": 50,
+      "points_reward": 300,
+      "bonus_multiplier": "2.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 50,
+      "created_at": "2025-11-06T20:56:04.480Z",
+      "updated_at": "2025-11-06T20:56:04.480Z"
+    }
+  },
+  {
+    "model": "streaks.challenge",
+    "pk": "6d3fc944-f8f0-4e08-b75d-07ef7ce9c6b8",
+    "fields": {
+      "title": "Embajador JOBY",
+      "description": "Refiere a 5 amigos",
+      "icon": "👑",
+      "challenge_type": "special",
+      "category": "networking",
+      "target_action": "refer_friend",
+      "target_count": 5,
+      "points_reward": 500,
+      "bonus_multiplier": "3.00",
+      "is_active": true,
+      "start_date": null,
+      "end_date": null,
+      "priority": 40,
+      "created_at": "2025-11-06T20:56:04.485Z",
+      "updated_at": "2025-11-06T20:56:04.485Z"
+    }
+  },
+  {
+    "model": "streaks.userchallenge",
+    "pk": "0850bbd8-e749-4e1f-ac22-e2f813804525",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "challenge": "81ca2416-ecf9-41cb-a1b6-a160d8bb74ae",
+      "current_progress": 1,
+      "status": "completed",
+      "started_at": "2025-11-06T20:56:40.186Z",
+      "completed_at": "2025-11-06T05:00:00Z",
+      "expires_at": null,
+      "points_earned": 50
+    }
+  },
+  {
+    "model": "streaks.userchallenge",
+    "pk": "35df3058-3503-4f82-8033-c11cda2bfd55",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "challenge": "10e451d2-abcc-44e9-a3f8-9e64d7246e90",
+      "current_progress": 1,
+      "status": "completed",
+      "started_at": "2025-11-06T20:56:40.181Z",
+      "completed_at": "2025-11-06T05:00:00Z",
+      "expires_at": null,
+      "points_earned": 20
+    }
+  },
+  {
+    "model": "streaks.userchallenge",
+    "pk": "8ebab481-97d7-4930-8451-8fc5039c8338",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "challenge": "941d64de-943a-4a7e-b750-63d80ffe9560",
+      "current_progress": 1,
+      "status": "completed",
+      "started_at": "2025-11-06T20:56:40.176Z",
+      "completed_at": "2025-11-06T05:00:00Z",
+      "expires_at": null,
+      "points_earned": 10
+    }
+  },
+  {
+    "model": "streaks.userchallenge",
+    "pk": "31bfeb52-4413-4ce9-83fa-5cc2290f96dc",
+    "fields": {
+      "user": "713ffd50-a5f6-4ae9-82d3-b89b0f99dd4c",
+      "challenge": "2c5ade4f-323c-4fe7-a57f-b6f7e31608e8",
+      "current_progress": 1,
+      "status": "completed",
+      "started_at": "2025-11-06T20:56:40.160Z",
+      "completed_at": "2025-11-06T05:00:00Z",
+      "expires_at": null,
+      "points_earned": 30
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": "789f1c1a-bd02-4ea8-9786-1a302b697b20",
+    "fields": {
+      "recipient": "f7660bc0-a5cb-4a37-8c33-cd5c0644bbc0",
+      "notification_type": "new_job",
+      "title": "¡3 nuevas vacantes para ti!",
+      "message": "Incluyendo Desarrollador Python Senior en TechCorp",
+      "data": {
+        "jobs": [
+          {
+            "id": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+            "title": "Desarrollador Python Senior",
+            "company": "TechCorp",
+            "score": 92,
+            "matching_skills": [
+              "Python",
+              "Django",
+              "PostgreSQL",
+              "Docker"
+            ]
+          },
+          {
+            "id": "fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+            "title": "Full Stack Developer",
+            "company": "Digital Agency",
+            "score": 53,
+            "matching_skills": [
+              "React"
+            ]
+          },
+          {
+            "id": "c2023d5b-8e82-424f-aa3a-b703de92c83c",
+            "title": "Frontend Developer React",
+            "company": "Startup Innovadora",
+            "score": 53,
+            "matching_skills": [
+              "React"
+            ]
+          }
+        ]
+      },
+      "action_url": "/jobs/0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+      "is_read": false,
+      "read_at": null,
+      "created_at": "2025-11-06T20:49:59.724Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": "54912f45-9bb3-4b61-8b24-e6f648d4ab4d",
+    "fields": {
+      "recipient": "870b7174-b2f4-4f99-be43-185b9807a5d6",
+      "notification_type": "new_job",
+      "title": "¡5 nuevas vacantes para ti!",
+      "message": "Incluyendo Desarrollador Python Senior en TechCorp",
+      "data": {
+        "jobs": [
+          {
+            "id": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+            "title": "Desarrollador Python Senior",
+            "company": "TechCorp",
+            "score": 63,
+            "matching_skills": [
+              "Python"
+            ]
+          },
+          {
+            "id": "a52da1d1-cf6b-4192-b5fa-53fd0a91584d",
+            "title": "Mobile Developer Flutter",
+            "company": "App Masters",
+            "score": 60,
+            "matching_skills": []
+          },
+          {
+            "id": "fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+            "title": "Full Stack Developer",
+            "company": "Digital Agency",
+            "score": 60,
+            "matching_skills": []
+          },
+          {
+            "id": "c2023d5b-8e82-424f-aa3a-b703de92c83c",
+            "title": "Frontend Developer React",
+            "company": "Startup Innovadora",
+            "score": 60,
+            "matching_skills": []
+          },
+          {
+            "id": "0e6f019c-e7d4-4151-956a-5d151632199e",
+            "title": "Data Scientist",
+            "company": "Analytics Co",
+            "score": 57,
+            "matching_skills": [
+              "Python",
+              "Machine Learning",
+              "TensorFlow",
+              "SQL"
+            ]
+          }
+        ]
+      },
+      "action_url": "/jobs/0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+      "is_read": false,
+      "read_at": null,
+      "created_at": "2025-11-06T20:49:59.720Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": "d5218ef9-056a-480d-abb6-44e56c36674d",
+    "fields": {
+      "recipient": "56ec4cdb-41c1-45b8-8001-25c2053771fa",
+      "notification_type": "new_job",
+      "title": "¡4 nuevas vacantes para ti!",
+      "message": "Incluyendo Full Stack Developer en Digital Agency",
+      "data": {
+        "jobs": [
+          {
+            "id": "fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+            "title": "Full Stack Developer",
+            "company": "Digital Agency",
+            "score": 92,
+            "matching_skills": [
+              "JavaScript",
+              "Node.js",
+              "React",
+              "MongoDB"
+            ]
+          },
+          {
+            "id": "c2023d5b-8e82-424f-aa3a-b703de92c83c",
+            "title": "Frontend Developer React",
+            "company": "Startup Innovadora",
+            "score": 76,
+            "matching_skills": [
+              "React",
+              "JavaScript"
+            ]
+          },
+          {
+            "id": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+            "title": "Desarrollador Python Senior",
+            "company": "TechCorp",
+            "score": 63,
+            "matching_skills": [
+              "AWS"
+            ]
+          },
+          {
+            "id": "a52da1d1-cf6b-4192-b5fa-53fd0a91584d",
+            "title": "Mobile Developer Flutter",
+            "company": "App Masters",
+            "score": 60,
+            "matching_skills": []
+          }
+        ]
+      },
+      "action_url": "/jobs/fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+      "is_read": false,
+      "read_at": null,
+      "created_at": "2025-11-06T20:49:59.714Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": "6ad4d6bd-a913-4265-bc11-c65bd9bdb226",
+    "fields": {
+      "recipient": "6cfc4b0b-957e-41d2-95b3-9707eb03ae59",
+      "notification_type": "new_job",
+      "title": "¡4 nuevas vacantes para ti!",
+      "message": "Incluyendo Mobile Developer Flutter en App Masters",
+      "data": {
+        "jobs": [
+          {
+            "id": "a52da1d1-cf6b-4192-b5fa-53fd0a91584d",
+            "title": "Mobile Developer Flutter",
+            "company": "App Masters",
+            "score": 76,
+            "matching_skills": [
+              "Firebase",
+              "REST APIs"
+            ]
+          },
+          {
+            "id": "fb5ce6f8-fc89-4b7e-bb50-35fbff4edefa",
+            "title": "Full Stack Developer",
+            "company": "Digital Agency",
+            "score": 60,
+            "matching_skills": []
+          },
+          {
+            "id": "c2023d5b-8e82-424f-aa3a-b703de92c83c",
+            "title": "Frontend Developer React",
+            "company": "Startup Innovadora",
+            "score": 60,
+            "matching_skills": []
+          },
+          {
+            "id": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+            "title": "Desarrollador Python Senior",
+            "company": "TechCorp",
+            "score": 55,
+            "matching_skills": []
+          }
+        ]
+      },
+      "action_url": "/jobs/a52da1d1-cf6b-4192-b5fa-53fd0a91584d",
+      "is_read": false,
+      "read_at": null,
+      "created_at": "2025-11-06T20:49:59.709Z"
+    }
+  },
+  {
+    "model": "notifications.notification",
+    "pk": "52147874-02b0-408c-8d74-a6e219f65e1e",
+    "fields": {
+      "recipient": "211671a0-5bfa-400e-a972-10736895a38a",
+      "notification_type": "new_job",
+      "title": "¡Nueva vacante perfecta para ti!",
+      "message": "Desarrollador Python Senior en TechCorp - 68% match",
+      "data": {
+        "jobs": [
+          {
+            "id": "0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+            "title": "Desarrollador Python Senior",
+            "company": "TechCorp",
+            "score": 68,
+            "matching_skills": [
+              "Docker"
+            ]
+          }
+        ]
+      },
+      "action_url": "/jobs/0afdae3a-5d9b-49ad-b288-a1ad609db5eb",
+      "is_read": false,
+      "read_at": null,
+      "created_at": "2025-11-06T20:49:59.702Z"
+    }
+  }
+]
